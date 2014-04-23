@@ -316,8 +316,8 @@ public class HomeController extends GroupDocsAnnotation {
      */
     @Override
     @RequestMapping(value = LIST_ANNOTATIONS_HANDLER, method = RequestMethod.POST)
-    public Object listAnnotationsHandler(HttpServletRequest request) {
-        return jsonOut(annotationHandler.listAnnotationsHandler(request));
+    public Object listAnnotationsHandler(HttpServletRequest request, HttpServletResponse response) {
+        return jsonOut(annotationHandler.listAnnotationsHandler(request, response));
     }
 
     /**
@@ -328,8 +328,8 @@ public class HomeController extends GroupDocsAnnotation {
      */
     @Override
     @RequestMapping(value = EXPORT_ANNOTATIONS_HANDLER, method = RequestMethod.POST)
-    public Object exportAnnotationsHandler(HttpServletRequest request) {
-        return jsonOut(annotationHandler.exportAnnotationsHandler(request));
+    public Object exportAnnotationsHandler(HttpServletRequest request, HttpServletResponse response) {
+        return jsonOut(annotationHandler.exportAnnotationsHandler(request, response));
     }
 
     /**
@@ -340,8 +340,8 @@ public class HomeController extends GroupDocsAnnotation {
      */
     @Override
     @RequestMapping(value = GET_PDF_VERSION_OF_DOCUMENT_HANDLER, method = RequestMethod.POST)
-    public Object getPdfVersionOfDocumentHandler(HttpServletRequest request) {
-        return jsonOut(annotationHandler.getPdfVersionOfDocumentHandler(request));
+    public Object getPdfVersionOfDocumentHandler(HttpServletRequest request, HttpServletResponse response) {
+        return jsonOut(annotationHandler.getPdfVersionOfDocumentHandler(request, response));
     }
 
     /**
@@ -352,8 +352,8 @@ public class HomeController extends GroupDocsAnnotation {
      */
     @Override
     @RequestMapping(value = CREATE_ANNOTATION_HANDLER, method = RequestMethod.POST)
-    public Object createAnnotationHandler(HttpServletRequest request) {
-        return jsonOut(annotationHandler.createAnnotationHandler(request));
+    public Object createAnnotationHandler(HttpServletRequest request, HttpServletResponse response) {
+        return jsonOut(annotationHandler.createAnnotationHandler(request, response));
     }
 
     /**
@@ -377,8 +377,8 @@ public class HomeController extends GroupDocsAnnotation {
      */
     @Override
     @RequestMapping(value = ADD_ANNOTATION_REPLY_HANDLER, method = RequestMethod.POST)
-    public Object addAnnotationReplyHandler(HttpServletRequest request) {
-        return jsonOut(annotationHandler.addAnnotationReplyHandler(request));
+    public Object addAnnotationReplyHandler(HttpServletRequest request, HttpServletResponse response) {
+        return jsonOut(annotationHandler.addAnnotationReplyHandler(request, response));
     }
 
     /**
@@ -389,8 +389,8 @@ public class HomeController extends GroupDocsAnnotation {
      */
     @Override
     @RequestMapping(value = EDIT_ANNOTATION_REPLY_HANDLER, method = RequestMethod.POST)
-    public Object editAnnotationReplyHandler(HttpServletRequest request) {
-        return jsonOut(annotationHandler.editAnnotationReplyHandler(request));
+    public Object editAnnotationReplyHandler(HttpServletRequest request, HttpServletResponse response) {
+        return jsonOut(annotationHandler.editAnnotationReplyHandler(request, response));
     }
 
     /**
@@ -401,8 +401,8 @@ public class HomeController extends GroupDocsAnnotation {
      */
     @Override
     @RequestMapping(value = DELETE_ANNOTATION_REPLY_HANDLER, method = RequestMethod.POST)
-    public Object deleteAnnotationReplyHandler(HttpServletRequest request) {
-        return jsonOut(annotationHandler.deleteAnnotationReplyHandler(request));
+    public Object deleteAnnotationReplyHandler(HttpServletRequest request, HttpServletResponse response) {
+        return jsonOut(annotationHandler.deleteAnnotationReplyHandler(request, response));
     }
 
     /**
@@ -413,8 +413,8 @@ public class HomeController extends GroupDocsAnnotation {
      */
     @Override
     @RequestMapping(value = DELETE_ANNOTATION_HANDLER, method = RequestMethod.POST)
-    public Object deleteAnnotationHandler(HttpServletRequest request) {
-        return jsonOut(annotationHandler.deleteAnnotationHandler(request));
+    public Object deleteAnnotationHandler(HttpServletRequest request, HttpServletResponse response) {
+        return jsonOut(annotationHandler.deleteAnnotationHandler(request, response));
     }
 
     /**
@@ -425,8 +425,8 @@ public class HomeController extends GroupDocsAnnotation {
      */
     @Override
     @RequestMapping(value = SAVE_TEXT_FIELD_HANDLER, method = RequestMethod.POST)
-    public Object saveTextFieldHandler(HttpServletRequest request) {
-        return jsonOut(annotationHandler.saveTextFieldHandler(request));
+    public Object saveTextFieldHandler(HttpServletRequest request, HttpServletResponse response) {
+        return jsonOut(annotationHandler.saveTextFieldHandler(request, response));
     }
 
     /**
@@ -437,8 +437,8 @@ public class HomeController extends GroupDocsAnnotation {
      */
     @Override
     @RequestMapping(value = SET_TEXT_FIELD_COLOR_HANDLER, method = RequestMethod.POST)
-    public Object setTextFieldColorHandler(HttpServletRequest request) {
-        return jsonOut(annotationHandler.setTextFieldColorHandler(request));
+    public Object setTextFieldColorHandler(HttpServletRequest request, HttpServletResponse response) {
+        return jsonOut(annotationHandler.setTextFieldColorHandler(request, response));
     }
 
     /**
@@ -449,8 +449,8 @@ public class HomeController extends GroupDocsAnnotation {
      */
     @Override
     @RequestMapping(value = MOVE_ANNOTATION_MARKER_HANDLER, method = RequestMethod.POST)
-    public Object moveAnnotationMarkerHandler(HttpServletRequest request) {
-        return jsonOut(annotationHandler.moveAnnotationMarkerHandler(request));
+    public Object moveAnnotationMarkerHandler(HttpServletRequest request, HttpServletResponse response) {
+        return jsonOut(annotationHandler.moveAnnotationMarkerHandler(request, response));
     }
 
     /**
@@ -461,14 +461,14 @@ public class HomeController extends GroupDocsAnnotation {
      */
     @RequestMapping(value = RESIZE_ANNOTATION_HANDLER, method = RequestMethod.POST)
     @Override
-    public Object resizeAnnotationHandler(HttpServletRequest request) {
-        return jsonOut(annotationHandler.resizeAnnotationHandler(request));
+    public Object resizeAnnotationHandler(HttpServletRequest request, HttpServletResponse response) {
+        return jsonOut(annotationHandler.resizeAnnotationHandler(request, response));
     }
 
     @RequestMapping(value = GET_DOCUMENT_COLLABORATORS_HANDLER, method = RequestMethod.POST)
     @Override
-    public Object getDocumentCollaboratorsHandler(HttpServletRequest request) {
-        return jsonOut(annotationHandler.getDocumentCollaboratorsHandler(request));
+    public Object getDocumentCollaboratorsHandler(HttpServletRequest request, HttpServletResponse response) {
+        return jsonOut(annotationHandler.getDocumentCollaboratorsHandler(request, response));
     }
 
     protected static ResponseEntity<String> jsonOut(Object obj) {
