@@ -59,7 +59,7 @@ public class HomeController extends GroupDocsAnnotation {
             // InputDataHandler.setInputDataHandler(new CustomInputDataHandler(config));
         }
         // Setting header in jsp page
-        model.addAttribute("groupdocsHeader", annotationHandler.getHeader());
+        model.addAttribute("groupdocsHeader", annotationHandler.getHeader(request));
         // Initialization of Viewer with document from this path
         final GroupDocsPath groupDocsFilePath;
 
@@ -79,7 +79,12 @@ public class HomeController extends GroupDocsAnnotation {
         } else {
             groupDocsFilePath = null;
         }
-        final String userGuid = annotationHandler.addCollaborator(userName, groupDocsFilePath.getPath(), AccessRights.All, getIntFromColor(Color.black));
+        final String userGuid = annotationHandler.addCollaborator(
+                userName,
+                groupDocsFilePath.getPath(),
+                AccessRights.from(AccessRights.CAN_VIEW, AccessRights.CAN_DELETE, AccessRights.CAN_DOWNLOAD, AccessRights.CAN_EXPORT, AccessRights.CAN_ANNOTATE),
+                getIntFromColor(Color.black)
+        );
         HashMap<String, String> params = new HashMap<String, String>() {{
             // You can skip parameters which have default value
             put("filePath",                             groupDocsFilePath.getPath()); // Default value: empty string
@@ -121,7 +126,7 @@ public class HomeController extends GroupDocsAnnotation {
 //            put("showDownload", Boolean.toString(applicationConfig.getShowDownload())); // Not used
 //            put("showSearch", Boolean.toString(applicationConfig.getShowSearch())); // Not used
         }};
-        model.addAttribute("groupdocsScripts", annotationHandler.getScripts(params));
+        model.addAttribute("groupdocsScripts", annotationHandler.getScripts(request, params));
         model.addAttribute("width", applicationConfig.getWidth());   // It is for sample JSP (index.jsp)
         model.addAttribute("height", applicationConfig.getHeight()); // It is for sample JSP (index.jsp)
 
