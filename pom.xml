@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.groupdocs</groupId>
     <artifactId>annotation-tomcat-slim</artifactId>
-    <version>1.3.0</version>
+    <version>1.4.0</version>
     <packaging>war</packaging>
 
     <name>GroupDocs Java Annotation - Sample Spring (Slim)</name>
@@ -16,7 +16,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- GroupDocs -->
-        <groupdocs.annotation>1.3.0</groupdocs.annotation>
+        <groupdocs.annotation>${project.version}</groupdocs.annotation>
         <groupdocs.viewer>2.0.0</groupdocs.viewer>
 
         <!-- Web -->
