@@ -17,7 +17,7 @@
 
         <!-- GroupDocs -->
         <groupdocs.annotation>${project.version}</groupdocs.annotation>
-        <groupdocs.viewer>2.0.0</groupdocs.viewer>
+        <groupdocs.viewer>2.2.0</groupdocs.viewer>
 
         <!-- Web -->
         <servlet.version>3.1.0</servlet.version>
