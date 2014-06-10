@@ -1,6 +1,5 @@
 package com.groupdocs;
 
-import com.google.gson.Gson;
 import com.groupdocs.annotation.domain.AccessRights;
 import com.groupdocs.annotation.domain.response.StatusResponse;
 import com.groupdocs.annotation.handler.AnnotationHandler;
@@ -32,9 +31,7 @@ import java.util.Map;
 import java.util.TimeZone;
 
 /**
- * User: liosha
  * Date: 05.12.13
- * Time: 22:54
  */
 @Controller
 public class HomeController extends GroupDocsAnnotation {
@@ -51,16 +48,10 @@ public class HomeController extends GroupDocsAnnotation {
     public String index(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "fileId", required = false) String fileId, @RequestParam(value = "fileUrl", required = false) String fileUrl, @RequestParam(value = "filePath", required = false) String filePath, @RequestParam(value = "tokenId", required = false) String tokenId, @RequestParam(value = "userName", required = false) final String userName) throws Exception {
         if (annotationHandler == null) {
             TimeZone.setDefault(TimeZone.getTimeZone("Europe/Vilnius"));
-            // Application path
-            String appPath = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-            // File storage path
-            String basePath = applicationConfig.getBasePath();
-            // File license path
-            String licensePath = applicationConfig.getLicensePath();
-            // INITIALIZE GroupDocs Java Annotation Object
             ServiceConfiguration serviceConfiguration = new ServiceConfiguration(applicationConfig);
             annotationHandler = new AnnotationHandler(serviceConfiguration);
-            // InputDataHandler.setInputDataHandler(new CustomInputDataHandler(config));
+//            annotationHandler = new AnnotationHandler(config, new CustomInputDataHandler(config));
+//            InputDataHandler.setInputDataHandler(new CustomInputDataHandler(config));
         }
         // Setting header in jsp page
         model.addAttribute("groupdocsHeader", annotationHandler.getHeader(request));
@@ -86,9 +77,14 @@ public class HomeController extends GroupDocsAnnotation {
         final String userGuid = annotationHandler.addCollaborator(
                 userName,
                 groupDocsFilePath.getPath(),
-                AccessRights.from(AccessRights.CAN_VIEW, AccessRights.CAN_DELETE, AccessRights.CAN_DOWNLOAD, AccessRights.CAN_EXPORT, AccessRights.CAN_ANNOTATE),
-                getIntFromColor(Color.black)
-        );
+                AccessRights.from(
+                        AccessRights.CAN_VIEW,
+                        AccessRights.CAN_ANNOTATE,
+                        AccessRights.CAN_EXPORT,
+                        AccessRights.CAN_DOWNLOAD,
+                        AccessRights.CAN_DELETE
+                ),
+                getIntFromColor(Color.black));
         HashMap<String, Object> params = new HashMap<String, Object>() {{
             // You can skip parameters which have default value
             put("filePath",                             groupDocsFilePath.getPath()); // Default value: empty string
@@ -131,13 +127,13 @@ public class HomeController extends GroupDocsAnnotation {
             put("widgetId",                             applicationConfig.getWidgetId());           // Default value: annotation-widget
             put("userName",                             userName == null ? "Anonimous" : userName);
             put("userGuid",                             userGuid);
-//            put("showFolderBrowser", Boolean.toString(applicationConfig.getShowFolderBrowser())); // Not used
-//            put("showDownload", Boolean.toString(applicationConfig.getShowDownload())); // Not used
-//            put("showSearch", Boolean.toString(applicationConfig.getShowSearch())); // Not used
+//            put("showFolderBrowser", applicationConfig.getShowFolderBrowser())); // Not used
+//            put("showDownload", applicationConfig.getShowDownload())); // Not used
+//            put("showSearch", applicationConfig.getShowSearch())); // Not used
         }};
         model.addAttribute("groupdocsScripts", annotationHandler.getScripts(request, params));
-        model.addAttribute("width", applicationConfig.getWidth());   // It is for sample JSP (index.jsp)
-        model.addAttribute("height", applicationConfig.getHeight()); // It is for sample JSP (index.jsp)
+        model.addAttribute("width", applicationConfig.getWidth());   // This is for sample JSP (index.jsp)
+        model.addAttribute("height", applicationConfig.getHeight()); // This is for sample JSP (index.jsp)
 
         return "index";
     }
@@ -202,7 +198,7 @@ public class HomeController extends GroupDocsAnnotation {
      */
     @Override
     @RequestMapping(value = GET_FILE_HANDLER, method = RequestMethod.GET)
-    public void getFileHandler(@RequestParam("path") String path, @RequestParam("getPdf") boolean getPdf, HttpServletResponse response) throws Exception {
+    public void getFileHandler(@RequestParam("path") String path, @RequestParam(value = "getPdf", required = false) boolean getPdf, HttpServletResponse response) throws Exception {
         annotationHandler.getFileHandler(path, getPdf, response);
     }
 
@@ -583,6 +579,12 @@ public class HomeController extends GroupDocsAnnotation {
     @RequestMapping(value = IMPORT_ANNOTATIONS_HANDLER, method = RequestMethod.POST)
     public ResponseEntity<String> importAnnotationsHandler(HttpServletRequest request, HttpServletResponse response){
         return jsonOut(annotationHandler.importAnnotationsHandler(request, response));
+    }
+
+    @Override
+    @RequestMapping(value = GET_PRINT_VIEW_HANDLER, method = RequestMethod.POST)
+    public ResponseEntity<String> getPrintViewHandler(HttpServletRequest request, HttpServletResponse response) {
+        return jsonOut(annotationHandler.getPrintViewHandler(request, response));
     }
 
     protected static ResponseEntity<String> jsonOut(Object obj) {
