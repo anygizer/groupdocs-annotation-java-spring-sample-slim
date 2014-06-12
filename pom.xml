@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.groupdocs</groupId>
-    <artifactId>annotation-tomcat-slim</artifactId>
-    <version>1.3.0</version>
+    <groupId>com.groupdocs.samples</groupId>
+    <artifactId>groupdocs-annotation-tomcat-slim</artifactId>
+    <version>1.4.0</version>
     <packaging>war</packaging>
 
     <name>GroupDocs Java Annotation - Sample Spring (Slim)</name>
@@ -16,8 +16,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- GroupDocs -->
-        <groupdocs.annotation>1.3.0</groupdocs.annotation>
-        <groupdocs.viewer>2.0.0</groupdocs.viewer>
+        <groupdocs.annotation>${project.version}</groupdocs.annotation>
+        <groupdocs.viewer>2.2.0</groupdocs.viewer>
 
         <!-- Web -->
         <servlet.version>3.1.0</servlet.version>
@@ -36,13 +36,13 @@
         <!-- Sample build dependencies -->
         <dependency>
             <groupId>com.groupdocs</groupId>
-            <artifactId>annotation</artifactId>
+            <artifactId>groupdocs-annotation</artifactId>
             <version>${groupdocs.annotation}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.groupdocs</groupId>
-            <artifactId>viewer</artifactId>
+            <artifactId>groupdocs-viewer</artifactId>
             <version>${groupdocs.viewer}</version>
         </dependency>
         <dependency>
