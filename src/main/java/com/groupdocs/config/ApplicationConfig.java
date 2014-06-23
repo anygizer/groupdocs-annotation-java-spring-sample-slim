@@ -23,6 +23,8 @@ public class ApplicationConfig implements ServiceConfigurationBase {
     protected int expirationDate;
     @Property(key = "groupdocs.annotation.encryptionKey")
     protected String encryptionKey;
+    @Property(key = "groupdocs.annotation.localesPath")
+    protected String localesPath;
     @Property(key = "groupdocs.annotation.quality")
     protected int quality;
     @Property(key = "groupdocs.annotation.showThumbnails")
@@ -177,6 +179,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
     @Property(key = "groupdocs.annotation.useBrowserCache")
     protected boolean useBrowserCache;
 
+    @Override
     public String getLicensePath() {
         return licensePath;
     }
@@ -185,6 +188,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.licensePath = licensePath;
     }
 
+    @Override
     public String getApplicationPath() {
         return applicationPath;
     }
@@ -193,6 +197,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.applicationPath = applicationPath;
     }
 
+    @Override
     public String getBasePath() {
         return basePath;
     }
@@ -201,6 +206,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.basePath = basePath;
     }
 
+    @Override
     public boolean isUseAuthorization() {
         return useAuthorization;
     }
@@ -209,6 +215,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.useAuthorization = useAuthorization;
     }
 
+    @Override
     public boolean isUseCache() {
         return useCache;
     }
@@ -226,6 +233,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.useCache = useCache;
     }
 
+    @Override
     public int getExpirationDate() {
         return expirationDate;
     }
@@ -234,6 +242,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.expirationDate = expirationDate;
     }
 
+    @Override
     public String getEncryptionKey() {
         return encryptionKey;
     }
@@ -242,6 +251,15 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.encryptionKey = encryptionKey;
     }
 
+    public String getLocalesPath() {
+        return localesPath;
+    }
+
+    public void setLocalesPath(String localesPath) {
+        this.localesPath = localesPath;
+    }
+
+    @Override
     public int getQuality() {
         return quality;
     }
@@ -250,6 +268,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.quality = quality;
     }
 
+    @Override
     public boolean isShowThumbnails() {
         return showThumbnails;
     }
@@ -258,6 +277,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.showThumbnails = showThumbnails;
     }
 
+    @Override
     public boolean isOpenThumbnails() {
         return openThumbnails;
     }
@@ -266,6 +286,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.openThumbnails = openThumbnails;
     }
 
+    @Override
     public int getInitialZoom() {
         return initialZoom;
     }
@@ -274,6 +295,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.initialZoom = initialZoom;
     }
 
+    @Override
     public boolean isZoomToFitWidth() {
         return zoomToFitWidth;
     }
@@ -282,6 +304,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.zoomToFitWidth = zoomToFitWidth;
     }
 
+    @Override
     public boolean isZoomToFitHeight() {
         return zoomToFitHeight;
     }
@@ -290,6 +313,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.zoomToFitHeight = zoomToFitHeight;
     }
 
+    @Override
     public int getWidth() {
         return width;
     }
@@ -298,6 +322,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.width = width;
     }
 
+    @Override
     public int getHeight() {
         return height;
     }
@@ -306,6 +331,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.height = height;
     }
 
+    @Override
     public String getBackgroundColor() {
         return backgroundColor;
     }
@@ -314,6 +340,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.backgroundColor = backgroundColor;
     }
 
+    @Override
     public boolean isShowFolderBrowser() {
         return showFolderBrowser;
     }
@@ -322,6 +349,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.showFolderBrowser = showFolderBrowser;
     }
 
+    @Override
     public boolean isShowPrint() {
         return showPrint;
     }
@@ -330,6 +358,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.showPrint = showPrint;
     }
 
+    @Override
     public boolean isShowDownload() {
         return showDownload;
     }
@@ -338,6 +367,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.showDownload = showDownload;
     }
 
+    @Override
     public boolean isShowZoom() {
         return showZoom;
     }
@@ -346,6 +376,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.showZoom = showZoom;
     }
 
+    @Override
     public boolean isShowPaging() {
         return showPaging;
     }
@@ -354,6 +385,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.showPaging = showPaging;
     }
 
+    @Override
     public boolean isShowViewerStyleControl() {
         return showViewerStyleControl;
     }
@@ -362,6 +394,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.showViewerStyleControl = showViewerStyleControl;
     }
 
+    @Override
     public boolean isShowSearch() {
         return showSearch;
     }
@@ -370,6 +403,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.showSearch = showSearch;
     }
 
+    @Override
     public int getPreloadPagesCount() {
         return preloadPagesCount;
     }
@@ -378,6 +412,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.preloadPagesCount = preloadPagesCount;
     }
 
+    @Override
     public int getViewerStyle() {
         return viewerStyle;
     }
@@ -386,6 +421,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.viewerStyle = viewerStyle;
     }
 
+    @Override
     public boolean isSupportTextSelection() {
         return supportTextSelection;
     }
@@ -394,6 +430,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.supportTextSelection = supportTextSelection;
     }
 
+    @Override
     public boolean isUsePdfPrinting() {
         return usePdfPrinting;
     }
@@ -402,6 +439,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.usePdfPrinting = usePdfPrinting;
     }
 
+    @Override
     public String getToolbarButtonsBoxShadowStyle() {
         return toolbarButtonsBoxShadowStyle;
     }
@@ -410,6 +448,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.toolbarButtonsBoxShadowStyle = toolbarButtonsBoxShadowStyle;
     }
 
+    @Override
     public String getToolbarButtonsBoxShadowHoverStyle() {
         return toolbarButtonsBoxShadowHoverStyle;
     }
@@ -418,6 +457,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.toolbarButtonsBoxShadowHoverStyle = toolbarButtonsBoxShadowHoverStyle;
     }
 
+    @Override
     public String getThumbnailsContainerBackgroundColor() {
         return thumbnailsContainerBackgroundColor;
     }
@@ -426,6 +466,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.thumbnailsContainerBackgroundColor = thumbnailsContainerBackgroundColor;
     }
 
+    @Override
     public String getThumbnailsContainerBorderRightColor() {
         return thumbnailsContainerBorderRightColor;
     }
@@ -434,6 +475,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.thumbnailsContainerBorderRightColor = thumbnailsContainerBorderRightColor;
     }
 
+    @Override
     public String getToolbarBorderBottomColor() {
         return toolbarBorderBottomColor;
     }
@@ -442,6 +484,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.toolbarBorderBottomColor = toolbarBorderBottomColor;
     }
 
+    @Override
     public String getToolbarInputFieldBorderColor() {
         return toolbarInputFieldBorderColor;
     }
@@ -450,6 +493,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.toolbarInputFieldBorderColor = toolbarInputFieldBorderColor;
     }
 
+    @Override
     public String getToolbarButtonBorderColor() {
         return toolbarButtonBorderColor;
     }
@@ -458,6 +502,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.toolbarButtonBorderColor = toolbarButtonBorderColor;
     }
 
+    @Override
     public String getToolbarButtonBorderHoverColor() {
         return toolbarButtonBorderHoverColor;
     }
@@ -466,6 +511,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.toolbarButtonBorderHoverColor = toolbarButtonBorderHoverColor;
     }
 
+    @Override
     public int getThumbnailsContainerWidth() {
         return thumbnailsContainerWidth;
     }
@@ -474,6 +520,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.thumbnailsContainerWidth = thumbnailsContainerWidth;
     }
 
+    @Override
     public boolean isShowDownloadErrorsInPopup() {
         return showDownloadErrorsInPopup;
     }
@@ -482,6 +529,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.showDownloadErrorsInPopup = showDownloadErrorsInPopup;
     }
 
+    @Override
     public boolean isShowImageWidth() {
         return showImageWidth;
     }
@@ -490,6 +538,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.showImageWidth = showImageWidth;
     }
 
+    @Override
     public boolean isShowHeader() {
         return showHeader;
     }
@@ -498,6 +547,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.showHeader = showHeader;
     }
 
+    @Override
     public int getMinimumImageWidth() {
         return minimumImageWidth;
     }
@@ -506,6 +556,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.minimumImageWidth = minimumImageWidth;
     }
 
+    @Override
     public boolean isEnableStandardErrorHandling() {
         return enableStandardErrorHandling;
     }
@@ -514,6 +565,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.enableStandardErrorHandling = enableStandardErrorHandling;
     }
 
+    @Override
     public boolean isUseHtmlBasedEngine() {
         return useHtmlBasedEngine;
     }
@@ -522,6 +574,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.useHtmlBasedEngine = useHtmlBasedEngine;
     }
 
+    @Override
     public boolean isUseImageBasedPrinting() {
         return useImageBasedPrinting;
     }
@@ -530,6 +583,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.useImageBasedPrinting = useImageBasedPrinting;
     }
 
+    @Override
     public boolean isDownloadPdfFile() {
         return downloadPdfFile;
     }
@@ -538,6 +592,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.downloadPdfFile = downloadPdfFile;
     }
 
+    @Override
     public boolean isSearchForSeparateWords() {
         return searchForSeparateWords;
     }
@@ -546,6 +601,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.searchForSeparateWords = searchForSeparateWords;
     }
 
+    @Override
     public boolean isPreventTouchEventsBubbling() {
         return preventTouchEventsBubbling;
     }
@@ -554,6 +610,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.preventTouchEventsBubbling = preventTouchEventsBubbling;
     }
 
+    @Override
     public boolean isUseInnerThumbnails() {
         return useInnerThumbnails;
     }
@@ -562,6 +619,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.useInnerThumbnails = useInnerThumbnails;
     }
 
+    @Override
     public String getWatermarkText() {
         return watermarkText;
     }
@@ -570,6 +628,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.watermarkText = watermarkText;
     }
 
+    @Override
     public String getWatermarkColor() {
         return watermarkColor;
     }
@@ -578,6 +637,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.watermarkColor = watermarkColor;
     }
 
+    @Override
     public boolean isSupportPageReordering() {
         return supportPageReordering;
     }
@@ -586,6 +646,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.supportPageReordering = supportPageReordering;
     }
 
+    @Override
     public boolean isOnlyShrinkLargePages() {
         return onlyShrinkLargePages;
     }
@@ -594,6 +655,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.onlyShrinkLargePages = onlyShrinkLargePages;
     }
 
+    @Override
     public String getSearchHighlightColor() {
         return searchHighlightColor;
     }
@@ -602,6 +664,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.searchHighlightColor = searchHighlightColor;
     }
 
+    @Override
     public String getCurrentSearchHighlightColor() {
         return currentSearchHighlightColor;
     }
@@ -610,6 +673,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.currentSearchHighlightColor = currentSearchHighlightColor;
     }
 
+    @Override
     public boolean isTreatPhrasesInDoubleQuotesAsExactPhrases() {
         return treatPhrasesInDoubleQuotesAsExactPhrases;
     }
@@ -618,6 +682,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.treatPhrasesInDoubleQuotesAsExactPhrases = treatPhrasesInDoubleQuotesAsExactPhrases;
     }
 
+    @Override
     public boolean isUsePngImagesForHtmlBasedEngine() {
         return usePngImagesForHtmlBasedEngine;
     }
@@ -626,6 +691,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.usePngImagesForHtmlBasedEngine = usePngImagesForHtmlBasedEngine;
     }
 
+    @Override
     public boolean isShowOnePageInRow() {
         return showOnePageInRow;
     }
@@ -634,6 +700,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.showOnePageInRow = showOnePageInRow;
     }
 
+    @Override
     public boolean isLoadAllPagesOnSearch() {
         return loadAllPagesOnSearch;
     }
@@ -642,6 +709,7 @@ public class ApplicationConfig implements ServiceConfigurationBase {
         this.loadAllPagesOnSearch = loadAllPagesOnSearch;
     }
 
+    @Override
     public boolean isUseEmScaling() {
         return useEmScaling;
     }
