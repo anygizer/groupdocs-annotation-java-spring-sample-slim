@@ -38,7 +38,7 @@ public class CustomInputDataHandler extends InputDataHandler {
     public InputStream getFile(String guid) {
         try {
             return new FileInputStream(fileId2FilePath.get(guid));
-        } catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
@@ -70,14 +70,14 @@ public class CustomInputDataHandler extends InputDataHandler {
             Logger.getLogger(CustomInputDataHandler.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
-                if(inputStream != null){
+                if (inputStream != null) {
                     inputStream.close();
                 }
             } catch (IOException ex) {
                 Logger.getLogger(CustomInputDataHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
-                if(os != null){
+                if (os != null) {
                     os.close();
                 }
             } catch (IOException ex) {

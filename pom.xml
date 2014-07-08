@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.groupdocs.samples</groupId>
     <artifactId>groupdocs-annotation-tomcat-slim</artifactId>
-    <version>1.4.0</version>
+    <version>1.5.0</version>
     <packaging>war</packaging>
 
     <name>GroupDocs Java Annotation - Sample Spring (Slim)</name>
@@ -76,38 +76,38 @@
         <!-- Sample runtime dependencies -->
         <dependency>
             <groupId>com.aspose</groupId>
-            <artifactId>email</artifactId>
+            <artifactId>aspose-email</artifactId>
             <version>4.0.1.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.aspose</groupId>
-            <artifactId>cells</artifactId>
+            <artifactId>aspose-cells</artifactId>
             <version>8.0.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.aspose</groupId>
-            <artifactId>imaging</artifactId>
+            <artifactId>aspose-imaging</artifactId>
             <version>2.1.0.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.aspose</groupId>
-            <artifactId>pdf</artifactId>
-            <version>9.0.0</version>
+            <artifactId>aspose-pdf</artifactId>
+            <version>9.1.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.aspose</groupId>
-            <artifactId>slides</artifactId>
+            <artifactId>aspose-slides</artifactId>
             <version>8.4.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.aspose</groupId>
-            <artifactId>words</artifactId>
-            <version>14.3.0</version>
+            <artifactId>aspose-words</artifactId>
+            <version>14.5.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
