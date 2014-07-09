@@ -2,7 +2,7 @@ package com.groupdocs.handler;
 
 import com.groupdocs.viewer.config.ServiceConfiguration;
 import com.groupdocs.viewer.domain.FileType;
-import com.groupdocs.viewer.handlers.InputDataHandler;
+import com.groupdocs.viewer.handlers.input.InputDataHandler;
 import com.groupdocs.viewer.resources.Utils;
 import org.apache.commons.codec.binary.Base64;
 
@@ -12,11 +12,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by liosha on 23.01.14.
+ * @author liosha on 23.01.14.
  */
 public class CustomInputDataHandler extends InputDataHandler {
-    private HashMap<String, String> fileId2FilePath = new HashMap<String, String>();
-    private HashMap<String, String> fileId2FileName = new HashMap<String, String>();
+    private final HashMap<String, String> fileId2FilePath = new HashMap<String, String>();
+    private final HashMap<String, String> fileId2FileName = new HashMap<String, String>();
     private String basePath = null;
 
     public CustomInputDataHandler(ServiceConfiguration serviceConfiguration) {
@@ -37,8 +37,11 @@ public class CustomInputDataHandler extends InputDataHandler {
     @Override
     public InputStream getFile(String guid) {
         try {
+            if (new File(guid).exists()) {
+                return new FileInputStream(guid);
+            }
             return new FileInputStream(fileId2FilePath.get(guid));
-        } catch (Exception e) {
+        } catch (FileNotFoundException e){
             return null;
         }
     }
@@ -70,14 +73,14 @@ public class CustomInputDataHandler extends InputDataHandler {
             Logger.getLogger(CustomInputDataHandler.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
-                if (inputStream != null) {
+                if(inputStream != null){
                     inputStream.close();
                 }
             } catch (IOException ex) {
                 Logger.getLogger(CustomInputDataHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
-                if (os != null) {
+                if(os != null){
                     os.close();
                 }
             } catch (IOException ex) {
