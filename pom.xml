@@ -77,13 +77,13 @@
         <dependency>
             <groupId>com.aspose</groupId>
             <artifactId>aspose-email</artifactId>
-            <version>4.0.1.0</version>
+            <version>4.3.0.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.aspose</groupId>
             <artifactId>aspose-cells</artifactId>
-            <version>8.0.0</version>
+            <version>8.1.1</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -107,7 +107,7 @@
         <dependency>
             <groupId>com.aspose</groupId>
             <artifactId>aspose-words</artifactId>
-            <version>14.5.0</version>
+            <version>14.6.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
