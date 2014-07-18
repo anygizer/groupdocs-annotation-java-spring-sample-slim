@@ -1,4 +1,4 @@
-package com.groupdocs.handler;
+package com.groupdocs.spring.slim.handler;
 
 import com.groupdocs.viewer.config.ServiceConfiguration;
 import com.groupdocs.viewer.domain.FileType;
@@ -41,7 +41,7 @@ public class CustomInputDataHandler extends InputDataHandler {
                 return new FileInputStream(guid);
             }
             return new FileInputStream(fileId2FilePath.get(guid));
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             return null;
         }
     }
@@ -73,14 +73,14 @@ public class CustomInputDataHandler extends InputDataHandler {
             Logger.getLogger(CustomInputDataHandler.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
-                if(inputStream != null){
+                if (inputStream != null) {
                     inputStream.close();
                 }
             } catch (IOException ex) {
                 Logger.getLogger(CustomInputDataHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
-                if(os != null){
+                if (os != null) {
                     os.close();
                 }
             } catch (IOException ex) {

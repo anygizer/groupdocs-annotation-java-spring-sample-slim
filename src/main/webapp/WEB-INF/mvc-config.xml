@@ -16,7 +16,7 @@
 
     <annotation-driven>
         <argument-resolvers>
-            <beans:bean class="com.groupdocs.service.AtmosphereResolver" />
+            <beans:bean class="com.groupdocs.spring.slim.service.AtmosphereResolver" />
         </argument-resolvers>
     </annotation-driven>
 

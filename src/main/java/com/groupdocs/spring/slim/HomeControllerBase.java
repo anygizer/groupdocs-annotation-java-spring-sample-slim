@@ -1,20 +1,19 @@
-package com.groupdocs;
+package com.groupdocs.spring.slim;
 
 import com.groupdocs.annotation.handler.GroupDocsAnnotation;
-
-import java.awt.Color;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.http.HttpServletResponse;
-
 import com.groupdocs.annotation.utils.Utils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+
+import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author Alex Bobkov
@@ -36,7 +35,7 @@ public abstract class HomeControllerBase extends GroupDocsAnnotation {
     }
 
     protected void writeOutput(Object o, HttpServletResponse response) {
-        if (o instanceof InputStream){
+        if (o instanceof InputStream) {
             writeOutput((InputStream) o, response);
         }
     }

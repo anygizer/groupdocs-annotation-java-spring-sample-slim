@@ -1,6 +1,6 @@
-package com.groupdocs.config;
+package com.groupdocs.spring.slim.config;
 
-import com.groupdocs.viewer.config.ServiceConfigurationBase;
+import com.groupdocs.annotation.config.IServiceConfiguration;
 import com.urbanmania.spring.beans.factory.config.annotations.Property;
 import org.springframework.stereotype.Component;
 
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * Created by Aleksey Permyakov
  */
 @Component
-public class ApplicationConfig implements ServiceConfigurationBase {
+public class ApplicationConfig implements IServiceConfiguration {
     @Property(key = "groupdocs.annotation.licensePath")
     protected String licensePath;
     @Property(key = "groupdocs.annotation.applicationPath")

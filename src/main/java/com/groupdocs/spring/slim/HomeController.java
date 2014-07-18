@@ -1,9 +1,9 @@
-package com.groupdocs;
+package com.groupdocs.spring.slim;
 
 import com.groupdocs.annotation.domain.AccessRights;
 import com.groupdocs.annotation.domain.response.StatusResponse;
 import com.groupdocs.annotation.handler.AnnotationHandler;
-import com.groupdocs.config.ApplicationConfig;
+import com.groupdocs.spring.slim.config.ApplicationConfig;
 import com.groupdocs.viewer.config.ServiceConfiguration;
 import com.groupdocs.viewer.domain.path.EncodedPath;
 import com.groupdocs.viewer.domain.path.GroupDocsPath;
@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -51,14 +50,14 @@ public class HomeController extends HomeControllerBase {
 //            InputDataHandler.setInputDataHandler(new CustomInputDataHandler(config));
         }
         // Setting header in jsp page
-        model.addAttribute("groupdocsHeader", annotationHandler.getHeader(request));
+        model.addAttribute("groupdocsHeader", annotationHandler.getHeader());
         // Initialization of Viewer with document from this path
         GroupDocsPath path = null;
-        if(file != null && !file.isEmpty()){
+        if (file != null && !file.isEmpty()) {
             path = new EncodedPath(file, annotationHandler.getConfiguration());
-        }else if(tokenId != null && !tokenId.isEmpty()){
+        } else if (tokenId != null && !tokenId.isEmpty()) {
             TokenId tki = new TokenId(tokenId, applicationConfig.getEncryptionKey());
-            if(!tki.isExpired()){
+            if (!tki.isExpired()) {
                 path = tki;
             }
         }
@@ -75,50 +74,7 @@ public class HomeController extends HomeControllerBase {
 //                        AccessRights.CAN_DELETE
 //                ),
                 getIntFromColor(Color.black));
-        HashMap<String, Object> params = new HashMap<String, Object>() {{
-            // You can skip parameters which have default value
-            put("filePath",                             initialPath); // Default value: empty string
-            put("width",                                applicationConfig.getWidth());            // Default value: 800
-            put("height",                               applicationConfig.getHeight());           // Default value: 600
-            put("quality",                              applicationConfig.getQuality());              // Default value: 90
-            put("enableRightClickMenu",                 applicationConfig.isEnableRightClickMenu());            // Default value: true
-            put("showHeader",                           applicationConfig.isShowHeader());       // Default value: true
-            put("showZoom",                             applicationConfig.isShowZoom());         // Default value: true
-            put("showPaging",                           applicationConfig.isShowPaging());       // Default value: true
-            put("showPrint",                            applicationConfig.isShowPrint());        // Default value: true
-            put("showFileExplorer",                     applicationConfig.isShowFileExplorer());            // Default value: true
-            put("showThumbnails",                       applicationConfig.isShowThumbnails());   // Default value: true
-            put("showToolbar",                          applicationConfig.isShowToolbar());            // Default value: true
-            put("openThumbnails",                       applicationConfig.isOpenThumbnails());   // Default value: false
-            put("zoomToFitWidth",                       applicationConfig.isZoomToFitWidth());           // Default value: false
-            put("zoomToFitHeight",                      applicationConfig.isZoomToFitHeight());           // Default value: false
-            put("initialZoom",                          applicationConfig.getInitialZoom());             // Default value: 100
-            put("preloadPagesCount",                    applicationConfig.getPreloadPagesCount());               // Default value: 0
-            put("enableSidePanel",                      applicationConfig.isEnableSidePanel());            // Default value: true
-            put("scrollOnFocus",                        applicationConfig.isScrollOnFocus());            // Default value: true
-            put("strikeOutColor",                       applicationConfig.getStrikeOutColor());                // Default value: empty string
-            put("enabledTools",                         applicationConfig.getEnabledTools());            // Default value: 2047
-            put("connectorPosition",                    applicationConfig.getConnectorPosition());               // Default value: 0
-            put("saveReplyOnFocusLoss",                 applicationConfig.isSaveReplyOnFocusLoss());           // Default value: false
-            put("clickableAnnotations",                 applicationConfig.isClickableAnnotations());           // Default value: true
-            put("disconnectUncommented",                applicationConfig.isDisconnectUncommented());           // Default value: false
-            put("strikeoutMode",                        applicationConfig.getStrikeoutMode());               // Default value: 1
-            put("sideboarContainerSelector",            applicationConfig.getSidebarContainerSelector()); // Default value: div.comments_sidebar_wrapper
-            put("usePageNumberInUrlHash",               applicationConfig.isUsePageNumberInUrlHash());           // Default value: false
-            put("textSelectionSynchronousCalculation",  applicationConfig.isTextSelectionSynchronousCalculation());            // Default value: true
-            put("variableHeightPageSupport",            applicationConfig.isVariableHeightPageSupport());            // Default value: true
-            put("useJavaScriptDocumentDescription",     applicationConfig.isUseJavaScriptDocumentDescription());            // Default value: true
-            put("isRightPanelEnabled",                  applicationConfig.isRightPanelEnabled());            // Default value: true
-            put("createMarkup",                         applicationConfig.isCreateMarkup());            // Default value: true
-            put("use_pdf",                              applicationConfig.isUse_pdf());            // Default value: true
-            put("_mode",                                applicationConfig.getMode());           // Default value: annotatedDocument
-            put("selectionContainerSelector",           applicationConfig.getSelectionContainerSelector());  // Default value: [name='selection-content']
-            put("graphicsContainerSelector",            applicationConfig.getGraphicsContainerSelector());       // Default value: .annotationsContainer
-            put("widgetId",                             applicationConfig.getWidgetId());           // Default value: annotation-widget
-            put("userName",                             userName == null ? "Anonimous" : userName);
-            put("userGuid",                             userGuid);
-        }};
-        model.addAttribute("groupdocsScripts", annotationHandler.getScripts(request, params));
+        model.addAttribute("groupdocsScripts", annotationHandler.getAnnotationScript(null, initialPath, userName, userGuid));
         model.addAttribute("width", applicationConfig.getWidth());   // This is for sample JSP (index.jsp)
         model.addAttribute("height", applicationConfig.getHeight()); // This is for sample JSP (index.jsp)
 
@@ -134,7 +90,7 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = GET_JS_HANDLER, method = RequestMethod.GET)
-    public Object getJsHandler(String script, HttpServletResponse response){
+    public Object getJsHandler(String script, HttpServletResponse response) {
         writeOutput(annotationHandler.getJsHandler(script, response), response);
         return null;
     }
@@ -148,7 +104,7 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = GET_CSS_HANDLER, method = RequestMethod.GET)
-    public Object getCssHandler(String script, HttpServletResponse response){
+    public Object getCssHandler(String script, HttpServletResponse response) {
         writeOutput(annotationHandler.getCssHandler(script, response), response);
         return null;
     }
@@ -162,35 +118,36 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = GET_IMAGE_HANDLER, method = RequestMethod.GET)
-    public Object getImageHandler(@PathVariable String name, HttpServletResponse response){
+    public Object getImageHandler(@PathVariable String name, HttpServletResponse response) {
         writeOutput(annotationHandler.getImageHandler(name, response), response);
         return null;
     }
 
     @Override
     @RequestMapping(value = GET_FONT_HANDLER, method = RequestMethod.GET)
-    public Object getFontHandler(String name, HttpServletResponse response){
+    public Object getFontHandler(@PathVariable String name, HttpServletResponse response) {
         writeOutput(annotationHandler.getFontHandler(name, response), response);
         return null;
     }
 
     @Override
     @RequestMapping(value = GET_HTML_RESOURCES_HANDLER, method = RequestMethod.GET)
-    public Object getHtmlRecoucesHandler(String filePath, HttpServletResponse response){
+    public Object getHtmlRecoucesHandler(String filePath, HttpServletResponse response) {
         writeOutput(annotationHandler.getHtmlRecoucesHandler(filePath, response), response);
         return null;
     }
 
     /**
      * Download file [GET request]
-     * @param path file path
-     * @param getPdf get pdf file
+     *
+     * @param path     file path
+     * @param getPdf   get pdf file
      * @param response http servlet response
      * @return
      */
     @Override
     @RequestMapping(value = GET_FILE_HANDLER, method = RequestMethod.GET)
-    public Object getFileHandler(@RequestParam("path") String path, @RequestParam(value = "getPdf", required = false) boolean getPdf, HttpServletResponse response){
+    public Object getFileHandler(@RequestParam("path") String path, @RequestParam(value = "getPdf", required = false) boolean getPdf, HttpServletResponse response) {
         writeOutput(annotationHandler.getFileHandler(path, getPdf, response), response);
         return null;
     }
@@ -209,7 +166,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = GET_DOCUMENT_PAGE_IMAGE_HANDLER, method = RequestMethod.GET)
     public Object getDocumentPageImageHandler(@RequestParam("path") String guid, @RequestParam("width") Integer width, @RequestParam("quality") Integer quality,
-                                              @RequestParam("usePdf") Boolean usePdf, @RequestParam("pageIndex") Integer pageIndex, HttpServletResponse response){
+                                              @RequestParam("usePdf") Boolean usePdf, @RequestParam("pageIndex") Integer pageIndex, HttpServletResponse response) {
         writeOutput(annotationHandler.getDocumentPageImageHandler(guid, width, quality, usePdf, pageIndex, response), response);
         return null;
     }
@@ -435,9 +392,9 @@ public class HomeController extends HomeControllerBase {
     /**
      * Get avatar for current user [GET request]
      *
-     * @param request HTTP servlet request
+     * @param request  HTTP servlet request
      * @param response
-     * @param userId  user id
+     * @param userId   user id
      * @return
      */
     @RequestMapping(value = GET_AVATAR_HANDLER, method = RequestMethod.GET)
@@ -544,6 +501,7 @@ public class HomeController extends HomeControllerBase {
 
     /**
      * Return list of collaborators [POST request]
+     *
      * @param request HTTP servlet request
      * @return object with response parameters
      */
@@ -555,8 +513,9 @@ public class HomeController extends HomeControllerBase {
 
     /**
      * Upload file to GroupDocs.Annotation [POST request]
-     * @param fld action
-     * @param request http request
+     *
+     * @param fld      action
+     * @param request  http request
      * @param response http response
      * @return token id as json
      * @throws java.io.IOException
@@ -567,13 +526,15 @@ public class HomeController extends HomeControllerBase {
             @RequestParam("user_id") String userId,
             @RequestParam("fld") String fld,
             HttpServletRequest request,
-            HttpServletResponse response) throws IOException{
-        if (annotationHandler == null) { return writeOutputJson(new StatusResponse(false, "Please, reload page!")); }
+            HttpServletResponse response) throws IOException {
+        if (annotationHandler == null) {
+            return writeOutputJson(new StatusResponse(false, "Please, reload page!"));
+        }
 
         String uploadFileName = null;
         InputStream uploadInputStream = null;
-        if (request instanceof DefaultMultipartHttpServletRequest){
-            Map<String,MultipartFile> fileMap = ((DefaultMultipartHttpServletRequest)request).getFileMap();
+        if (request instanceof DefaultMultipartHttpServletRequest) {
+            Map<String, MultipartFile> fileMap = ((DefaultMultipartHttpServletRequest) request).getFileMap();
             if (fileMap.keySet().iterator().hasNext()) {
                 String fileName = fileMap.keySet().iterator().next();
                 MultipartFile multipartFile = fileMap.get(fileName);
@@ -585,14 +546,14 @@ public class HomeController extends HomeControllerBase {
     }
 
     /**
-     * @see com.groupdocs.annotation.handler.GroupDocsAnnotation
-     * @param request http servlet request
+     * @param request  http servlet request
      * @param response http servlet response
      * @return object with response parameters
+     * @see com.groupdocs.annotation.handler.GroupDocsAnnotation
      */
     @Override
     @RequestMapping(value = IMPORT_ANNOTATIONS_HANDLER, method = RequestMethod.POST)
-    public ResponseEntity<String> importAnnotationsHandler(HttpServletRequest request, HttpServletResponse response){
+    public ResponseEntity<String> importAnnotationsHandler(HttpServletRequest request, HttpServletResponse response) {
         return writeOutputJson(annotationHandler.importAnnotationsHandler(request, response));
     }
 
@@ -604,6 +565,7 @@ public class HomeController extends HomeControllerBase {
 
     /**
      * On ready handler
+     *
      * @param resource resource data received from socket
      */
     @Override
@@ -615,6 +577,7 @@ public class HomeController extends HomeControllerBase {
 
     /**
      * On message handler [POST]
+     *
      * @param resource resource data received from socket
      */
     @Override

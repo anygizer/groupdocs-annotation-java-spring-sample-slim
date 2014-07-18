@@ -1,4 +1,4 @@
-package com.groupdocs.service;
+package com.groupdocs.spring.slim.service;
 
 import org.atmosphere.cpr.AtmosphereResource;
 import org.atmosphere.cpr.Meteor;
