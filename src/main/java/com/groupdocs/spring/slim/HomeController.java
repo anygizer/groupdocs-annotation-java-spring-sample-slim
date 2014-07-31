@@ -37,7 +37,7 @@ public class HomeController extends HomeControllerBase {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "userName", required = false) String userName) throws Exception {
-        return index(model, request, response, applicationConfig.getBasePath() + "/files/GroupDocs_Demo.doc", null, userName);
+        return index(model, request, response, applicationConfig.getBasePath() + "/GroupDocs_Demo.doc", null, userName);
     }
 
     @RequestMapping(value = "/view", method = RequestMethod.GET)
@@ -75,8 +75,6 @@ public class HomeController extends HomeControllerBase {
 //                ),
                 getIntFromColor(Color.black));
         model.addAttribute("groupdocsScripts", annotationHandler.getAnnotationScript(null, initialPath, userName, userGuid));
-        model.addAttribute("width", applicationConfig.getWidth());   // This is for sample JSP (index.jsp)
-        model.addAttribute("height", applicationConfig.getHeight()); // This is for sample JSP (index.jsp)
 
         return "index";
     }
