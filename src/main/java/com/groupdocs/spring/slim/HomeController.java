@@ -520,11 +520,7 @@ public class HomeController extends HomeControllerBase {
      */
     @Override
     @RequestMapping(value = UPLOAD_FILE_HANDLER, method = RequestMethod.POST)
-    public ResponseEntity<String> uploadFileHandler(
-            @RequestParam("user_id") String userId,
-            @RequestParam("fld") String fld,
-            HttpServletRequest request,
-            HttpServletResponse response) throws IOException {
+    public ResponseEntity<String> uploadFileHandler(@RequestParam("user_id") String userId, @RequestParam("fld") String fld, HttpServletRequest request, HttpServletResponse response) throws IOException {
         if (annotationHandler == null) {
             return writeOutputJson(new StatusResponse(false, "Please, reload page!"));
         }
@@ -540,7 +536,7 @@ public class HomeController extends HomeControllerBase {
                 uploadInputStream = multipartFile.getInputStream();
             }
         }
-        return writeOutputJson(annotationHandler.uploadFileHandler(userId, fld, uploadFileName, uploadInputStream, 0, request, response));
+        return writeOutputJson(annotationHandler.uploadFileHandler(userId, uploadFileName, uploadInputStream, true));
     }
 
     /**
