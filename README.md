@@ -1,4 +1,4 @@
-Groupdocs Slim Annotation for Java (Spring Sample)
+Groupdocs Slim Annotation for Java (Spring Sample) 1.5.0
 ===========================================
 
 1. Download sample sources to any directory 
