@@ -11,7 +11,7 @@ Groupdocs Slim Annotation for Java (Spring Sample)
 *All dependencies are configured in POM.xml file, saved in `libs` folder and added in `install_libs.bat` file to easy install them into local maven repository.
 
 
-More details about GroupDocs.Assembly for Java see here: http://groupdocs.com/java/document-annotation-library
+More details about GroupDocs.Annotation for Java see here: http://groupdocs.com/java/document-annotation-library
 
 ###[Sign, Manage, Annotate, Assemble, Compare and Convert Documents with GroupDocs](http://groupdocs.com)
 1. [Sign documents online with GroupDocs Signature](http://groupdocs.com/apps/signature)
