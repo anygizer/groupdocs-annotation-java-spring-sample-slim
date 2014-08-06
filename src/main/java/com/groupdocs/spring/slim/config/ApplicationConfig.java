@@ -54,6 +54,8 @@ public class ApplicationConfig extends ServiceConfigurationBase {
     protected boolean showHeader;
     @Property(key = "groupdocs.annotation.useEmScaling")
     protected boolean useEmScaling;
+    @Property(key = "groupdocs.annotation.undoEnabled")
+    private boolean undoEnabled;
 
     @Property(key = "groupdocs.annotation.showFileExplorer")
     protected boolean showFileExplorer;
@@ -498,6 +500,15 @@ public class ApplicationConfig extends ServiceConfigurationBase {
 
     public boolean isShowFileExplorer() {
         return showFileExplorer;
+    }
+
+    @Override
+    public boolean isUndoEnabled() {
+        return true;
+    }
+
+    public void setUndoEnabled(boolean undoEnabled) {
+        this.undoEnabled = undoEnabled;
     }
 
     public void setShowFileExplorer(boolean showFileExplorer) {

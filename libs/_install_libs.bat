@@ -10,6 +10,6 @@ call mvn install:install-file -Dpackaging=jar -Dversion=8.4.0   -DgroupId=com.as
 call mvn install:install-file -Dpackaging=jar -Dversion=14.6.0 	-DgroupId=com.aspose        -DartifactId=aspose-words    		-Dfile=aspose.words-14.6.0.jar
 
 call mvn install:install-file -Dpackaging=jar -Dversion=2.3.0	-DgroupId=com.groupdocs		-DartifactId=groupdocs-viewer		-Dfile=viewer-2.3.0-final.jar
-call mvn install:install-file -Dpackaging=jar -Dversion=1.5.0	-DgroupId=com.groupdocs		-DartifactId=groupdocs-annotation	-Dfile=annotation-1.5.0-slim.jar
+call mvn install:install-file -Dpackaging=jar -Dversion=1.6.0	-DgroupId=com.groupdocs		-DartifactId=groupdocs-annotation	-Dfile=annotation-1.6.0-slim.jar
 
 pause
