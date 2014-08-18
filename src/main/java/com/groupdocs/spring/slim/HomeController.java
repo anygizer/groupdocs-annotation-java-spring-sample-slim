@@ -2,14 +2,10 @@ package com.groupdocs.spring.slim;
 
 import com.groupdocs.annotation.domain.AccessRights;
 import com.groupdocs.annotation.domain.response.StatusResponse;
-import com.groupdocs.annotation.handler.AnnotationHandler;
-import com.groupdocs.spring.slim.config.ApplicationConfig;
-import com.groupdocs.viewer.config.ServiceConfiguration;
 import com.groupdocs.viewer.domain.path.EncodedPath;
 import com.groupdocs.viewer.domain.path.GroupDocsPath;
 import com.groupdocs.viewer.domain.path.TokenId;
 import org.atmosphere.cpr.AtmosphereResource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,16 +20,12 @@ import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
-import java.util.TimeZone;
 
 /**
  * Date: 05.12.13
  */
 @Controller
 public class HomeController extends HomeControllerBase {
-    @Autowired
-    protected ApplicationConfig applicationConfig;
-    protected AnnotationHandler annotationHandler = null;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "userName", required = false) String userName) throws Exception {
@@ -42,19 +34,12 @@ public class HomeController extends HomeControllerBase {
 
     @RequestMapping(value = "/view", method = RequestMethod.GET)
     public String index(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "file", required = false) String file, @RequestParam(value = "tokenId", required = false) String tokenId, @RequestParam(value = "userName", required = false) final String userName) throws Exception {
-        if (annotationHandler == null) {
-            TimeZone.setDefault(TimeZone.getTimeZone("Europe/Vilnius"));
-            ServiceConfiguration serviceConfiguration = new ServiceConfiguration(applicationConfig);
-            annotationHandler = new AnnotationHandler(serviceConfiguration);
-//            annotationHandler = new AnnotationHandler(config, new CustomInputDataHandler(config));
-//            InputDataHandler.setInputDataHandler(new CustomInputDataHandler(config));
-        }
         // Setting header in jsp page
-        model.addAttribute("groupdocsHeader", annotationHandler.getHeader());
+        model.addAttribute("groupdocsHeader", annotationHandler().getHeader());
         // Initialization of Viewer with document from this path
         GroupDocsPath path = null;
         if (file != null && !file.isEmpty()) {
-            path = new EncodedPath(file, annotationHandler.getConfiguration());
+            path = new EncodedPath(file, annotationHandler().getConfiguration());
         } else if (tokenId != null && !tokenId.isEmpty()) {
             TokenId tki = new TokenId(tokenId, applicationConfig.getEncryptionKey());
             if (!tki.isExpired()) {
@@ -62,7 +47,7 @@ public class HomeController extends HomeControllerBase {
             }
         }
         final String initialPath = (path == null) ? "" : path.getPath();
-        final String userGuid = annotationHandler.addCollaborator(
+        final String userGuid = annotationHandler().addCollaborator(
                 userName,
                 initialPath,
                 AccessRights.All,
@@ -74,8 +59,7 @@ public class HomeController extends HomeControllerBase {
 //                        AccessRights.CAN_DELETE
 //                ),
                 getIntFromColor(Color.black));
-        model.addAttribute("groupdocsScripts", annotationHandler.getAnnotationScript(null, initialPath, userName, userGuid));
-
+        model.addAttribute("groupdocsScripts", annotationHandler().getAnnotationScript(null, initialPath, userName, userGuid));
         return "index";
     }
 
@@ -89,7 +73,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = GET_JS_HANDLER, method = RequestMethod.GET)
     public Object getJsHandler(String script, HttpServletResponse response) {
-        writeOutput(annotationHandler.getJsHandler(script, response), response);
+        writeOutput(annotationHandler().getJsHandler(script, response), response);
         return null;
     }
 
@@ -103,7 +87,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = GET_CSS_HANDLER, method = RequestMethod.GET)
     public Object getCssHandler(String script, HttpServletResponse response) {
-        writeOutput(annotationHandler.getCssHandler(script, response), response);
+        writeOutput(annotationHandler().getCssHandler(script, response), response);
         return null;
     }
 
@@ -117,21 +101,21 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = GET_IMAGE_HANDLER, method = RequestMethod.GET)
     public Object getImageHandler(@PathVariable String name, HttpServletResponse response) {
-        writeOutput(annotationHandler.getImageHandler(name, response), response);
+        writeOutput(annotationHandler().getImageHandler(name, response), response);
         return null;
     }
 
     @Override
     @RequestMapping(value = GET_FONT_HANDLER, method = RequestMethod.GET)
     public Object getFontHandler(@PathVariable String name, HttpServletResponse response) {
-        writeOutput(annotationHandler.getFontHandler(name, response), response);
+        writeOutput(annotationHandler().getFontHandler(name, response), response);
         return null;
     }
 
     @Override
     @RequestMapping(value = GET_HTML_RESOURCES_HANDLER, method = RequestMethod.GET)
     public Object getHtmlRecoucesHandler(String filePath, HttpServletResponse response) {
-        writeOutput(annotationHandler.getHtmlRecoucesHandler(filePath, response), response);
+        writeOutput(annotationHandler().getHtmlRecoucesHandler(filePath, response), response);
         return null;
     }
 
@@ -146,7 +130,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = GET_FILE_HANDLER, method = RequestMethod.GET)
     public Object getFileHandler(@RequestParam("path") String path, @RequestParam(value = "getPdf", required = false) boolean getPdf, HttpServletResponse response) {
-        writeOutput(annotationHandler.getFileHandler(path, getPdf, response), response);
+        writeOutput(annotationHandler().getFileHandler(path, getPdf, response), response);
         return null;
     }
 
@@ -165,7 +149,7 @@ public class HomeController extends HomeControllerBase {
     @RequestMapping(value = GET_DOCUMENT_PAGE_IMAGE_HANDLER, method = RequestMethod.GET)
     public Object getDocumentPageImageHandler(@RequestParam("path") String guid, @RequestParam("width") Integer width, @RequestParam("quality") Integer quality,
                                               @RequestParam("usePdf") Boolean usePdf, @RequestParam("pageIndex") Integer pageIndex, HttpServletResponse response) {
-        writeOutput(annotationHandler.getDocumentPageImageHandler(guid, width, quality, usePdf, pageIndex, response), response);
+        writeOutput(annotationHandler().getDocumentPageImageHandler(guid, width, quality, usePdf, pageIndex, response), response);
         return null;
     }
 
@@ -179,7 +163,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = VIEW_DOCUMENT_HANDLER, method = RequestMethod.POST)
     public ResponseEntity<String> viewDocumentHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.viewDocumentHandler(request, response));
+        return writeOutputJson(annotationHandler().viewDocumentHandler(request, response));
     }
 
     /**
@@ -194,7 +178,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = VIEW_DOCUMENT_HANDLER, method = RequestMethod.GET)
     public ResponseEntity<String> viewDocumentHandler(String callback, String data, HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.viewDocumentHandler(callback, data, request, response));
+        return writeOutputJson(annotationHandler().viewDocumentHandler(callback, data, request, response));
     }
 
     /**
@@ -207,7 +191,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = LOAD_FILE_BROWSER_TREE_DATA_HANLER, method = RequestMethod.POST)
     public ResponseEntity<String> loadFileBrowserTreeDataHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.loadFileBrowserTreeDataHandler(request, response));
+        return writeOutputJson(annotationHandler().loadFileBrowserTreeDataHandler(request, response));
     }
 
     /**
@@ -221,7 +205,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = LOAD_FILE_BROWSER_TREE_DATA_HANLER, method = RequestMethod.GET)
     public ResponseEntity<String> loadFileBrowserTreeDataHandler(String callback, String data, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.loadFileBrowserTreeDataHandler(callback, data, response));
+        return writeOutputJson(annotationHandler().loadFileBrowserTreeDataHandler(callback, data, response));
     }
 
     /**
@@ -234,7 +218,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = GET_IMAGE_URL_HANDLER, method = RequestMethod.POST)
     public ResponseEntity<String> getImageUrlsHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.getImageUrlsHandler(request, response));
+        return writeOutputJson(annotationHandler().getImageUrlsHandler(request, response));
     }
 
     /**
@@ -249,7 +233,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = GET_IMAGE_URL_HANDLER, method = RequestMethod.GET)
     public ResponseEntity<String> getImageUrlsHandler(String callback, String data, HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.getImageUrlsHandler(callback, data, request, response));
+        return writeOutputJson(annotationHandler().getImageUrlsHandler(callback, data, request, response));
     }
 
     /**
@@ -262,7 +246,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = GET_PDF_2_JAVA_SCRIPT_HANDLER, method = RequestMethod.POST)
     public ResponseEntity<String> getPdf2JavaScriptHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.getPdf2JavaScriptHandler(request, response));
+        return writeOutputJson(annotationHandler().getPdf2JavaScriptHandler(request, response));
     }
 
     /**
@@ -276,7 +260,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = GET_PDF_2_JAVA_SCRIPT_HANDLER, method = RequestMethod.GET)
     public ResponseEntity<String> getPdf2JavaScriptHandler(String callback, String data, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.getPdf2JavaScriptHandler(callback, data, response));
+        return writeOutputJson(annotationHandler().getPdf2JavaScriptHandler(callback, data, response));
     }
 
     /**
@@ -289,7 +273,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = GET_PRINTABLE_HTML_HANDLER, method = RequestMethod.POST)
     public ResponseEntity<String> getPrintableHtmlHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutput(annotationHandler.getPrintableHtmlHandler(request, response), MediaType.TEXT_HTML);
+        return writeOutput(annotationHandler().getPrintableHtmlHandler(request, response), MediaType.TEXT_HTML);
     }
 
     /**
@@ -304,13 +288,13 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = GET_PRINTABLE_HTML_HANDLER, method = RequestMethod.GET)
     public ResponseEntity<String> getPrintableHtmlHandler(String callback, String data, HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.getPrintableHtmlHandler(callback, data, request, response));
+        return writeOutputJson(annotationHandler().getPrintableHtmlHandler(callback, data, request, response));
     }
 
     @Override
     @RequestMapping(value = GET_DOCUMENT_PAGE_HTML_HANDLER, method = RequestMethod.GET)
     public Object getDocumentPageHtmlHandler(HttpServletRequest request, HttpServletResponse response) {
-        writeOutput(annotationHandler.getDocumentPageHtmlHandler(request, response), response);
+        writeOutput(annotationHandler().getDocumentPageHtmlHandler(request, response), response);
         return null;
     }
 
@@ -323,7 +307,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = GET_PDF_WITH_PRINT_DIALOG, method = RequestMethod.GET)
     public Object getPdfWithPrintDialog(String path, HttpServletResponse response) {
-        writeOutput(annotationHandler.getPdfWithPrintDialog(path, response), response);
+        writeOutput(annotationHandler().getPdfWithPrintDialog(path, response), response);
         return null;
     }
 
@@ -336,7 +320,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = REORDER_PAGE_HANDLER, method = RequestMethod.POST)
     public Object reorderPageHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.reorderPageHandler(request, response));
+        return writeOutputJson(annotationHandler().reorderPageHandler(request, response));
     }
 
     /**
@@ -348,7 +332,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = LIST_ANNOTATIONS_HANDLER, method = RequestMethod.POST)
     public Object listAnnotationsHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.listAnnotationsHandler(request, response));
+        return writeOutputJson(annotationHandler().listAnnotationsHandler(request, response));
     }
 
     /**
@@ -360,7 +344,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = EXPORT_ANNOTATIONS_HANDLER, method = RequestMethod.POST)
     public Object exportAnnotationsHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.exportAnnotationsHandler(request, response));
+        return writeOutputJson(annotationHandler().exportAnnotationsHandler(request, response));
     }
 
     /**
@@ -372,7 +356,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = GET_PDF_VERSION_OF_DOCUMENT_HANDLER, method = RequestMethod.POST)
     public Object getPdfVersionOfDocumentHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.getPdfVersionOfDocumentHandler(request, response));
+        return writeOutputJson(annotationHandler().getPdfVersionOfDocumentHandler(request, response));
     }
 
     /**
@@ -384,7 +368,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = CREATE_ANNOTATION_HANDLER, method = RequestMethod.POST)
     public Object createAnnotationHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.createAnnotationHandler(request, response));
+        return writeOutputJson(annotationHandler().createAnnotationHandler(request, response));
     }
 
     /**
@@ -398,7 +382,7 @@ public class HomeController extends HomeControllerBase {
     @RequestMapping(value = GET_AVATAR_HANDLER, method = RequestMethod.GET)
     @Override
     public Object getAvatarHandler(HttpServletRequest request, HttpServletResponse response, String userId) {
-        return annotationHandler.getAvatarHandler(request, response, userId);
+        return annotationHandler().getAvatarHandler(request, response, userId);
     }
 
     /**
@@ -410,7 +394,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = ADD_ANNOTATION_REPLY_HANDLER, method = RequestMethod.POST)
     public Object addAnnotationReplyHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.addAnnotationReplyHandler(request, response));
+        return writeOutputJson(annotationHandler().addAnnotationReplyHandler(request, response));
     }
 
     /**
@@ -422,7 +406,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = EDIT_ANNOTATION_REPLY_HANDLER, method = RequestMethod.POST)
     public Object editAnnotationReplyHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.editAnnotationReplyHandler(request, response));
+        return writeOutputJson(annotationHandler().editAnnotationReplyHandler(request, response));
     }
 
     /**
@@ -434,7 +418,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = DELETE_ANNOTATION_REPLY_HANDLER, method = RequestMethod.POST)
     public Object deleteAnnotationReplyHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.deleteAnnotationReplyHandler(request, response));
+        return writeOutputJson(annotationHandler().deleteAnnotationReplyHandler(request, response));
     }
 
     /**
@@ -446,7 +430,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = DELETE_ANNOTATION_HANDLER, method = RequestMethod.POST)
     public Object deleteAnnotationHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.deleteAnnotationHandler(request, response));
+        return writeOutputJson(annotationHandler().deleteAnnotationHandler(request, response));
     }
 
     /**
@@ -458,7 +442,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = SAVE_TEXT_FIELD_HANDLER, method = RequestMethod.POST)
     public Object saveTextFieldHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.saveTextFieldHandler(request, response));
+        return writeOutputJson(annotationHandler().saveTextFieldHandler(request, response));
     }
 
     /**
@@ -470,7 +454,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = SET_TEXT_FIELD_COLOR_HANDLER, method = RequestMethod.POST)
     public Object setTextFieldColorHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.setTextFieldColorHandler(request, response));
+        return writeOutputJson(annotationHandler().setTextFieldColorHandler(request, response));
     }
 
     /**
@@ -482,7 +466,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = MOVE_ANNOTATION_MARKER_HANDLER, method = RequestMethod.POST)
     public Object moveAnnotationMarkerHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.moveAnnotationMarkerHandler(request, response));
+        return writeOutputJson(annotationHandler().moveAnnotationMarkerHandler(request, response));
     }
 
     /**
@@ -494,7 +478,7 @@ public class HomeController extends HomeControllerBase {
     @RequestMapping(value = RESIZE_ANNOTATION_HANDLER, method = RequestMethod.POST)
     @Override
     public Object resizeAnnotationHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.resizeAnnotationHandler(request, response));
+        return writeOutputJson(annotationHandler().resizeAnnotationHandler(request, response));
     }
 
     /**
@@ -506,7 +490,7 @@ public class HomeController extends HomeControllerBase {
     @RequestMapping(value = GET_DOCUMENT_COLLABORATORS_HANDLER, method = RequestMethod.POST)
     @Override
     public Object getDocumentCollaboratorsHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.getDocumentCollaboratorsHandler(request, response));
+        return writeOutputJson(annotationHandler().getDocumentCollaboratorsHandler(request, response));
     }
 
     /**
@@ -516,15 +500,10 @@ public class HomeController extends HomeControllerBase {
      * @param request  http request
      * @param response http response
      * @return token id as json
-     * @throws java.io.IOException
      */
     @Override
     @RequestMapping(value = UPLOAD_FILE_HANDLER, method = RequestMethod.POST)
-    public ResponseEntity<String> uploadFileHandler(@RequestParam("user_id") String userId, @RequestParam("fld") String fld, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        if (annotationHandler == null) {
-            return writeOutputJson(new StatusResponse(false, "Please, reload page!"));
-        }
-
+    public ResponseEntity<String> uploadFileHandler(@RequestParam("user_id") String userId, @RequestParam("fld") String fld, HttpServletRequest request, HttpServletResponse response) {
         String uploadFileName = null;
         InputStream uploadInputStream = null;
         if (request instanceof DefaultMultipartHttpServletRequest) {
@@ -533,10 +512,14 @@ public class HomeController extends HomeControllerBase {
                 String fileName = fileMap.keySet().iterator().next();
                 MultipartFile multipartFile = fileMap.get(fileName);
                 uploadFileName = multipartFile.getOriginalFilename();
-                uploadInputStream = multipartFile.getInputStream();
+                try {
+                    uploadInputStream = multipartFile.getInputStream();
+                } catch (IOException e) {
+                    return writeOutputJson(new StatusResponse(false, "Can't get input stream!"));
+                }
             }
         }
-        return writeOutputJson(annotationHandler.uploadFileHandler(userId, uploadFileName, uploadInputStream, true));
+        return writeOutputJson(annotationHandler().uploadFileHandler(userId, uploadFileName, uploadInputStream, true));
     }
 
     /**
@@ -548,13 +531,13 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = IMPORT_ANNOTATIONS_HANDLER, method = RequestMethod.POST)
     public ResponseEntity<String> importAnnotationsHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.importAnnotationsHandler(request, response));
+        return writeOutputJson(annotationHandler().importAnnotationsHandler(request, response));
     }
 
     @Override
     @RequestMapping(value = GET_PRINT_VIEW_HANDLER, method = RequestMethod.POST)
     public ResponseEntity<String> getPrintViewHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler.getPrintViewHandler(request, response));
+        return writeOutputJson(annotationHandler().getPrintViewHandler(request, response));
     }
 
     /**
@@ -566,7 +549,7 @@ public class HomeController extends HomeControllerBase {
     @ResponseBody
     @RequestMapping(value = ATMOSPHERE_ANNOTATION, method = RequestMethod.GET)
     public void onAtmosphereReady(AtmosphereResource resource) {
-        annotationHandler.onAtmosphereReady(resource);
+        annotationHandler().onAtmosphereReady(resource);
     }
 
     /**
@@ -578,6 +561,6 @@ public class HomeController extends HomeControllerBase {
     @ResponseBody
     @RequestMapping(value = ATMOSPHERE_ANNOTATION, method = RequestMethod.POST)
     public void onAtmosphereMessage(AtmosphereResource resource) {
-        annotationHandler.onAtmosphereMessage(resource);
+        annotationHandler().onAtmosphereMessage(resource);
     }
 }

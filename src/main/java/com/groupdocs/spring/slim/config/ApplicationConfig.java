@@ -1,6 +1,5 @@
 package com.groupdocs.spring.slim.config;
 
-import com.groupdocs.annotation.config.IServiceConfiguration;
 import com.groupdocs.annotation.config.ServiceConfigurationBase;
 import com.urbanmania.spring.beans.factory.config.annotations.Property;
 import org.springframework.stereotype.Component;
@@ -16,6 +15,8 @@ public class ApplicationConfig extends ServiceConfigurationBase {
     protected String applicationPath;
     @Property(key = "groupdocs.annotation.basePath")
     protected String basePath;
+    @Property(key = "groupdocs.annotation.uploadPath")
+    private String uploadPath;
     @Property(key = "groupdocs.annotation.useAuthorization")
     protected boolean useAuthorization;
     @Property(key = "groupdocs.annotation.useCache")
@@ -133,6 +134,15 @@ public class ApplicationConfig extends ServiceConfigurationBase {
 
     public void setBasePath(String basePath) {
         this.basePath = basePath;
+    }
+
+    @Override
+    public String getUploadPath() {
+        return uploadPath;
+    }
+
+    public void setUploadPath(String uploadPath) {
+        this.uploadPath = uploadPath;
     }
 
     @Override
@@ -504,7 +514,7 @@ public class ApplicationConfig extends ServiceConfigurationBase {
 
     @Override
     public boolean isUndoEnabled() {
-        return true;
+        return undoEnabled;
     }
 
     public void setUndoEnabled(boolean undoEnabled) {
