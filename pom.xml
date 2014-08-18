@@ -17,11 +17,11 @@
 
         <!-- GroupDocs -->
         <groupdocs.annotation>${project.version}</groupdocs.annotation>
-        <groupdocs.viewer>2.3.0</groupdocs.viewer>
+        <groupdocs.viewer>2.4.0</groupdocs.viewer>
 
         <!-- Web -->
         <servlet.version>3.1.0</servlet.version>
-		<jstl.version>1.2</jstl.version>
+        <jstl.version>1.2</jstl.version>
 
         <!-- Spring -->
         <spring-framework.version>3.2.5.RELEASE</spring-framework.version>
@@ -95,21 +95,21 @@
         <dependency>
             <groupId>com.aspose</groupId>
             <artifactId>aspose-pdf</artifactId>
-            <version>9.1.0</version>
-            <type>jar</type>
+            <version>9.3.1</version>
         </dependency>
         <dependency>
             <groupId>com.aspose</groupId>
             <artifactId>aspose-slides</artifactId>
-            <version>8.4.0</version>
-            <type>jar</type>
+            <version>14.5.0</version>
         </dependency>
+
         <dependency>
             <groupId>com.aspose</groupId>
             <artifactId>aspose-words</artifactId>
             <version>14.6.0</version>
             <type>jar</type>
         </dependency>
+        <!-- -->
         <dependency>
             <groupId>org.atmosphere</groupId>
             <artifactId>atmosphere-runtime</artifactId>
@@ -157,7 +157,7 @@
             <version>3.7.2</version>
             <type>jar</type>
         </dependency>
-		<dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>${jstl.version}</version>
