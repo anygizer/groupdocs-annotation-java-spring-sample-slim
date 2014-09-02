@@ -90,8 +90,6 @@ public class ApplicationConfig extends ServiceConfigurationBase {
     protected boolean textSelectionSynchronousCalculation;
     @Property(key = "groupdocs.annotation.variableHeightPageSupport")
     protected boolean variableHeightPageSupport;
-    @Property(key = "groupdocs.annotation.useJavaScriptDocumentDescription")
-    protected boolean useJavaScriptDocumentDescription;
     @Property(key = "groupdocs.annotation.rightPanelEnabled")
     protected boolean rightPanelEnabled;
     @Property(key = "groupdocs.annotation.createMarkup")
@@ -442,14 +440,6 @@ public class ApplicationConfig extends ServiceConfigurationBase {
 
     public void setVariableHeightPageSupport(boolean variableHeightPageSupport) {
         this.variableHeightPageSupport = variableHeightPageSupport;
-    }
-
-    public boolean isUseJavaScriptDocumentDescription() {
-        return useJavaScriptDocumentDescription;
-    }
-
-    public void setUseJavaScriptDocumentDescription(boolean useJavaScriptDocumentDescription) {
-        this.useJavaScriptDocumentDescription = useJavaScriptDocumentDescription;
     }
 
     public boolean isRightPanelEnabled() {
