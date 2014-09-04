@@ -17,7 +17,7 @@
 
         <!-- GroupDocs -->
         <groupdocs.annotation>${project.version}</groupdocs.annotation>
-        <groupdocs.viewer>2.4.0</groupdocs.viewer>
+        <groupdocs.viewer>2.4.1</groupdocs.viewer>
 
         <!-- Web -->
         <servlet.version>3.1.0</servlet.version>
@@ -77,13 +77,13 @@
         <dependency>
             <groupId>com.aspose</groupId>
             <artifactId>aspose-email</artifactId>
-            <version>4.3.0.0</version>
+            <version>4.4.0.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.aspose</groupId>
             <artifactId>aspose-cells</artifactId>
-            <version>8.1.1</version>
+            <version>8.2.0</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -106,7 +106,7 @@
         <dependency>
             <groupId>com.aspose</groupId>
             <artifactId>aspose-words</artifactId>
-            <version>14.6.0</version>
+            <version>14.7.0</version>
             <type>jar</type>
         </dependency>
         <!-- -->
