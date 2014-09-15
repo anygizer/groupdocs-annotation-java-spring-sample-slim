@@ -17,6 +17,10 @@ public class ApplicationConfig extends ServiceConfigurationBase {
     protected String basePath;
     @Property(key = "groupdocs.annotation.uploadPath")
     private String uploadPath;
+    @Property(key = "groupdocs.annotation.dbDriver")
+    protected String dbDriver;
+    @Property(key = "groupdocs.annotation.dbConnection")
+    protected String dbConnection;
     @Property(key = "groupdocs.annotation.useAuthorization")
     protected boolean useAuthorization;
     @Property(key = "groupdocs.annotation.useCache")
@@ -141,6 +145,22 @@ public class ApplicationConfig extends ServiceConfigurationBase {
 
     public void setUploadPath(String uploadPath) {
         this.uploadPath = uploadPath;
+    }
+
+    public String getDbDriver() {
+        return dbDriver;
+    }
+
+    public void setDbDriver(String dbDriver) {
+        this.dbDriver = dbDriver;
+    }
+
+    public String getDbConnection() {
+        return dbConnection;
+    }
+
+    public void setDbConnection(String dbConnection) {
+        this.dbConnection = dbConnection;
     }
 
     @Override

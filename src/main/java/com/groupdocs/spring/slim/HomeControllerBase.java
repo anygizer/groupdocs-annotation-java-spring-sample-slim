@@ -4,6 +4,7 @@ import com.groupdocs.annotation.handler.AnnotationHandler;
 import com.groupdocs.annotation.handler.GroupDocsAnnotation;
 import com.groupdocs.annotation.utils.Utils;
 import com.groupdocs.spring.slim.config.ApplicationConfig;
+import com.groupdocs.spring.slim.connector.CustomDatabaseConnector;
 import com.groupdocs.viewer.config.ServiceConfiguration;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,8 +81,9 @@ public abstract class HomeControllerBase extends GroupDocsAnnotation {
             ServiceConfiguration serviceConfiguration = new ServiceConfiguration(applicationConfig);
             try {
                 annotationHandler = new AnnotationHandler(serviceConfiguration);
-                //            annotationHandler = new AnnotationHandler(config, new CustomInputDataHandler(config));
-                //            InputDataHandler.setInputDataHandler(new CustomInputDataHandler(config));
+//                annotationHandler = new AnnotationHandler(config, new CustomInputDataHandler(config));
+//                annotationHandler = new AnnotationHandler(serviceConfiguration, null, new CustomDatabaseConnector(applicationConfig));
+//                InputDataHandler.setInputDataHandler(new CustomInputDataHandler(config));
             } catch (Exception e) {
                 // TODO: // logger
                 e.printStackTrace();
