@@ -177,6 +177,11 @@
             <artifactId>ormlite-jdbc</artifactId>
             <version>4.48</version>
         </dependency>
+        <dependency>
+            <groupId>com.aspose</groupId>
+            <artifactId>aspose-diagram</artifactId>
+            <version>2.2.0</version>
+        </dependency>
 
         <dependency>
             <groupId>mysql</groupId>
