@@ -15,10 +15,20 @@ public class ApplicationConfig extends ServiceConfigurationBase {
     protected String applicationPath;
     @Property(key = "groupdocs.annotation.basePath")
     protected String basePath;
-    @Property(key = "groupdocs.annotation.dbDriver")
-    protected String dbDriver;
-    @Property(key = "groupdocs.annotation.dbConnection")
-    protected String dbConnection;
+    @Property(key = "groupdocs.annotation.storageType")
+    protected String storageType;
+    @Property(key = "groupdocs.annotation.dbServer")
+    protected String dbServer;
+    @Property(key = "groupdocs.annotation.dbPort")
+    protected Integer dbPort;
+    @Property(key = "groupdocs.annotation.dbName")
+    protected String dbName;
+    @Property(key = "groupdocs.annotation.dbUsername")
+    protected String dbUsername;
+    @Property(key = "groupdocs.annotation.dbPassword")
+    protected String dbPassword;
+    @Property(key = "groupdocs.annotation.storagePath")
+    protected String storagePath;
     @Property(key = "groupdocs.annotation.useAuthorization")
     protected boolean useAuthorization;
     @Property(key = "groupdocs.annotation.useCache")
@@ -55,10 +65,10 @@ public class ApplicationConfig extends ServiceConfigurationBase {
     protected int preloadPagesCount;
     @Property(key = "groupdocs.annotation.showHeader")
     protected boolean showHeader;
-    @Property(key = "groupdocs.annotation.useEmScaling")
-    protected boolean useEmScaling;
     @Property(key = "groupdocs.annotation.showFileExplorer")
     protected boolean showFileExplorer;
+    @Property(key = "groupdocs.annotation.useEmScaling")
+    protected boolean useEmScaling;
     @Property(key = "groupdocs.annotation.enableRightClickMenu")
     protected boolean enableRightClickMenu;
     @Property(key = "groupdocs.annotation.showToolbar")
@@ -101,10 +111,10 @@ public class ApplicationConfig extends ServiceConfigurationBase {
     protected String selectionContainerSelector;
     @Property(key = "groupdocs.annotation.graphicsContainerSelector")
     protected String graphicsContainerSelector;
-    @Property(key = "groupdocs.annotation.widgetId")
-    protected String widgetId;
     @Property(key = "groupdocs.annotation.useBrowserCache")
     protected boolean useBrowserCache;
+    @Property(key = "groupdocs.annotation.widgetId")
+    protected String widgetId;
     @Property(key = "groupdocs.annotation.uploadPath")
     private String uploadPath;
     @Property(key = "groupdocs.annotation.undoEnabled")
@@ -139,29 +149,60 @@ public class ApplicationConfig extends ServiceConfigurationBase {
         this.basePath = basePath;
     }
 
-    @Override
-    public String getUploadPath() {
-        return uploadPath;
+    public String getStorageType() {
+        return storageType;
     }
 
-    public void setUploadPath(String uploadPath) {
-        this.uploadPath = uploadPath;
+    public void setStorageType(String storageType) {
+        this.storageType = storageType;
     }
 
-    public String getDbDriver() {
-        return dbDriver;
+    public String getDbServer() {
+        return dbServer;
     }
 
-    public void setDbDriver(String dbDriver) {
-        this.dbDriver = dbDriver;
+    public void setDbServer(String dbServer) {
+        this.dbServer = dbServer;
     }
 
-    public String getDbConnection() {
-        return dbConnection;
+    public Integer getDbPort() {
+        return dbPort;
     }
 
-    public void setDbConnection(String dbConnection) {
-        this.dbConnection = dbConnection;
+    public void setDbPort(Integer dbPort) {
+        this.dbPort = dbPort;
+    }
+
+    public String getDbName() {
+        return dbName;
+    }
+
+    public void setDbName(String dbName) {
+        this.dbName = dbName;
+    }
+
+    public String getDbUsername() {
+        return dbUsername;
+    }
+
+    public void setDbUsername(String dbUsername) {
+        this.dbUsername = dbUsername;
+    }
+
+    public String getDbPassword() {
+        return dbPassword;
+    }
+
+    public void setDbPassword(String dbPassword) {
+        this.dbPassword = dbPassword;
+    }
+
+    public String getStoragePath() {
+        return storagePath;
+    }
+
+    public void setStoragePath(String storagePath) {
+        this.storagePath = storagePath;
     }
 
     @Override
@@ -183,15 +224,6 @@ public class ApplicationConfig extends ServiceConfigurationBase {
     }
 
     @Override
-    public boolean isUseBrowserCache() {
-        return useBrowserCache;
-    }
-
-    public void setUseBrowserCache(boolean useBrowserCache) {
-        this.useBrowserCache = useBrowserCache;
-    }
-
-    @Override
     public int getExpirationDate() {
         return expirationDate;
     }
@@ -209,12 +241,22 @@ public class ApplicationConfig extends ServiceConfigurationBase {
         this.encryptionKey = encryptionKey;
     }
 
+    @Override
     public String getLocalesPath() {
         return localesPath;
     }
 
     public void setLocalesPath(String localesPath) {
         this.localesPath = localesPath;
+    }
+
+    @Override
+    public String getUploadPath() {
+        return uploadPath;
+    }
+
+    public void setUploadPath(String uploadPath) {
+        this.uploadPath = uploadPath;
     }
 
     @Override
@@ -335,182 +377,6 @@ public class ApplicationConfig extends ServiceConfigurationBase {
     }
 
     @Override
-    public boolean isUseEmScaling() {
-        return useEmScaling;
-    }
-
-    public void setUseEmScaling(boolean useEmScaling) {
-        this.useEmScaling = useEmScaling;
-    }
-
-    public boolean isEnableRightClickMenu() {
-        return enableRightClickMenu;
-    }
-
-    public void setEnableRightClickMenu(boolean enableRightClickMenu) {
-        this.enableRightClickMenu = enableRightClickMenu;
-    }
-
-    public boolean isShowToolbar() {
-        return showToolbar;
-    }
-
-    public void setShowToolbar(boolean showToolbar) {
-        this.showToolbar = showToolbar;
-    }
-
-    public boolean isEnableSidePanel() {
-        return enableSidePanel;
-    }
-
-    public void setEnableSidePanel(boolean enableSidePanel) {
-        this.enableSidePanel = enableSidePanel;
-    }
-
-    public boolean isScrollOnFocus() {
-        return scrollOnFocus;
-    }
-
-    public void setScrollOnFocus(boolean scrollOnFocus) {
-        this.scrollOnFocus = scrollOnFocus;
-    }
-
-    public int getEnabledTools() {
-        return enabledTools;
-    }
-
-    public void setEnabledTools(int enabledTools) {
-        this.enabledTools = enabledTools;
-    }
-
-    public int getConnectorPosition() {
-        return connectorPosition;
-    }
-
-    public void setConnectorPosition(int connectorPosition) {
-        this.connectorPosition = connectorPosition;
-    }
-
-    public boolean isSaveReplyOnFocusLoss() {
-        return saveReplyOnFocusLoss;
-    }
-
-    public void setSaveReplyOnFocusLoss(boolean saveReplyOnFocusLoss) {
-        this.saveReplyOnFocusLoss = saveReplyOnFocusLoss;
-    }
-
-    public boolean isClickableAnnotations() {
-        return clickableAnnotations;
-    }
-
-    public void setClickableAnnotations(boolean clickableAnnotations) {
-        this.clickableAnnotations = clickableAnnotations;
-    }
-
-    public boolean isDisconnectUncommented() {
-        return disconnectUncommented;
-    }
-
-    public void setDisconnectUncommented(boolean disconnectUncommented) {
-        this.disconnectUncommented = disconnectUncommented;
-    }
-
-    public int getStrikeoutMode() {
-        return strikeoutMode;
-    }
-
-    public void setStrikeoutMode(int strikeoutMode) {
-        this.strikeoutMode = strikeoutMode;
-    }
-
-    public String getSidebarContainerSelector() {
-        return sidebarContainerSelector;
-    }
-
-    public void setSidebarContainerSelector(String sidebarContainerSelector) {
-        this.sidebarContainerSelector = sidebarContainerSelector;
-    }
-
-    public boolean isUsePageNumberInUrlHash() {
-        return usePageNumberInUrlHash;
-    }
-
-    public void setUsePageNumberInUrlHash(boolean usePageNumberInUrlHash) {
-        this.usePageNumberInUrlHash = usePageNumberInUrlHash;
-    }
-
-    public boolean isTextSelectionSynchronousCalculation() {
-        return textSelectionSynchronousCalculation;
-    }
-
-    public void setTextSelectionSynchronousCalculation(boolean textSelectionSynchronousCalculation) {
-        this.textSelectionSynchronousCalculation = textSelectionSynchronousCalculation;
-    }
-
-    public boolean isVariableHeightPageSupport() {
-        return variableHeightPageSupport;
-    }
-
-    public void setVariableHeightPageSupport(boolean variableHeightPageSupport) {
-        this.variableHeightPageSupport = variableHeightPageSupport;
-    }
-
-    public boolean isRightPanelEnabled() {
-        return rightPanelEnabled;
-    }
-
-    public void setRightPanelEnabled(boolean rightPanelEnabled) {
-        this.rightPanelEnabled = rightPanelEnabled;
-    }
-
-    public boolean isCreateMarkup() {
-        return createMarkup;
-    }
-
-    public void setCreateMarkup(boolean createMarkup) {
-        this.createMarkup = createMarkup;
-    }
-
-    public boolean isUse_pdf() {
-        return use_pdf;
-    }
-
-    public void setUse_pdf(boolean use_pdf) {
-        this.use_pdf = use_pdf;
-    }
-
-    public String getMode() {
-        return mode;
-    }
-
-    public void setMode(String mode) {
-        this.mode = mode;
-    }
-
-    public String getSelectionContainerSelector() {
-        return selectionContainerSelector;
-    }
-
-    public void setSelectionContainerSelector(String selectionContainerSelector) {
-        this.selectionContainerSelector = selectionContainerSelector;
-    }
-
-    public String getGraphicsContainerSelector() {
-        return graphicsContainerSelector;
-    }
-
-    public void setGraphicsContainerSelector(String graphicsContainerSelector) {
-        this.graphicsContainerSelector = graphicsContainerSelector;
-    }
-
-    public String getWidgetId() {
-        return widgetId;
-    }
-
-    public void setWidgetId(String widgetId) {
-        this.widgetId = widgetId;
-    }
-
     public boolean isShowFileExplorer() {
         return showFileExplorer;
     }
@@ -528,12 +394,13 @@ public class ApplicationConfig extends ServiceConfigurationBase {
         this.undoEnabled = undoEnabled;
     }
 
-    public boolean isAnyToolSelection() {
-        return anyToolSelection;
+    @Override
+    public boolean isUseEmScaling() {
+        return useEmScaling;
     }
 
-    public void setAnyToolSelection(boolean anyToolSelection) {
-        this.anyToolSelection = anyToolSelection;
+    public void setUseEmScaling(boolean useEmScaling) {
+        this.useEmScaling = useEmScaling;
     }
 
     @Override
@@ -544,4 +411,212 @@ public class ApplicationConfig extends ServiceConfigurationBase {
     public void setMaxCacheSize(long maxCacheSize) {
         this.maxCacheSize = maxCacheSize;
     }
+
+    @Override
+    public boolean isEnableRightClickMenu() {
+        return enableRightClickMenu;
+    }
+
+    public void setEnableRightClickMenu(boolean enableRightClickMenu) {
+        this.enableRightClickMenu = enableRightClickMenu;
+    }
+
+    @Override
+    public boolean isShowToolbar() {
+        return showToolbar;
+    }
+
+    public void setShowToolbar(boolean showToolbar) {
+        this.showToolbar = showToolbar;
+    }
+
+    @Override
+    public boolean isEnableSidePanel() {
+        return enableSidePanel;
+    }
+
+    public void setEnableSidePanel(boolean enableSidePanel) {
+        this.enableSidePanel = enableSidePanel;
+    }
+
+    @Override
+    public boolean isScrollOnFocus() {
+        return scrollOnFocus;
+    }
+
+    public void setScrollOnFocus(boolean scrollOnFocus) {
+        this.scrollOnFocus = scrollOnFocus;
+    }
+
+    @Override
+    public int getEnabledTools() {
+        return enabledTools;
+    }
+
+    public void setEnabledTools(int enabledTools) {
+        this.enabledTools = enabledTools;
+    }
+
+    @Override
+    public int getConnectorPosition() {
+        return connectorPosition;
+    }
+
+    public void setConnectorPosition(int connectorPosition) {
+        this.connectorPosition = connectorPosition;
+    }
+
+    @Override
+    public boolean isSaveReplyOnFocusLoss() {
+        return saveReplyOnFocusLoss;
+    }
+
+    public void setSaveReplyOnFocusLoss(boolean saveReplyOnFocusLoss) {
+        this.saveReplyOnFocusLoss = saveReplyOnFocusLoss;
+    }
+
+    @Override
+    public boolean isClickableAnnotations() {
+        return clickableAnnotations;
+    }
+
+    public void setClickableAnnotations(boolean clickableAnnotations) {
+        this.clickableAnnotations = clickableAnnotations;
+    }
+
+    @Override
+    public boolean isDisconnectUncommented() {
+        return disconnectUncommented;
+    }
+
+    public void setDisconnectUncommented(boolean disconnectUncommented) {
+        this.disconnectUncommented = disconnectUncommented;
+    }
+
+    @Override
+    public int getStrikeoutMode() {
+        return strikeoutMode;
+    }
+
+    public void setStrikeoutMode(int strikeoutMode) {
+        this.strikeoutMode = strikeoutMode;
+    }
+
+    @Override
+    public boolean isAnyToolSelection() {
+        return anyToolSelection;
+    }
+
+    public void setAnyToolSelection(boolean anyToolSelection) {
+        this.anyToolSelection = anyToolSelection;
+    }
+
+    @Override
+    public String getSidebarContainerSelector() {
+        return sidebarContainerSelector;
+    }
+
+    public void setSidebarContainerSelector(String sidebarContainerSelector) {
+        this.sidebarContainerSelector = sidebarContainerSelector;
+    }
+
+    @Override
+    public boolean isUsePageNumberInUrlHash() {
+        return usePageNumberInUrlHash;
+    }
+
+    public void setUsePageNumberInUrlHash(boolean usePageNumberInUrlHash) {
+        this.usePageNumberInUrlHash = usePageNumberInUrlHash;
+    }
+
+    @Override
+    public boolean isTextSelectionSynchronousCalculation() {
+        return textSelectionSynchronousCalculation;
+    }
+
+    public void setTextSelectionSynchronousCalculation(boolean textSelectionSynchronousCalculation) {
+        this.textSelectionSynchronousCalculation = textSelectionSynchronousCalculation;
+    }
+
+    @Override
+    public boolean isVariableHeightPageSupport() {
+        return variableHeightPageSupport;
+    }
+
+    public void setVariableHeightPageSupport(boolean variableHeightPageSupport) {
+        this.variableHeightPageSupport = variableHeightPageSupport;
+    }
+
+    @Override
+    public boolean isRightPanelEnabled() {
+        return rightPanelEnabled;
+    }
+
+    public void setRightPanelEnabled(boolean rightPanelEnabled) {
+        this.rightPanelEnabled = rightPanelEnabled;
+    }
+
+    @Override
+    public boolean isCreateMarkup() {
+        return createMarkup;
+    }
+
+    public void setCreateMarkup(boolean createMarkup) {
+        this.createMarkup = createMarkup;
+    }
+
+    @Override
+    public boolean isUse_pdf() {
+        return use_pdf;
+    }
+
+    public void setUse_pdf(boolean use_pdf) {
+        this.use_pdf = use_pdf;
+    }
+
+    @Override
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+    @Override
+    public String getSelectionContainerSelector() {
+        return selectionContainerSelector;
+    }
+
+    public void setSelectionContainerSelector(String selectionContainerSelector) {
+        this.selectionContainerSelector = selectionContainerSelector;
+    }
+
+    @Override
+    public String getGraphicsContainerSelector() {
+        return graphicsContainerSelector;
+    }
+
+    public void setGraphicsContainerSelector(String graphicsContainerSelector) {
+        this.graphicsContainerSelector = graphicsContainerSelector;
+    }
+
+    @Override
+    public boolean isUseBrowserCache() {
+        return useBrowserCache;
+    }
+
+    public void setUseBrowserCache(boolean useBrowserCache) {
+        this.useBrowserCache = useBrowserCache;
+    }
+
+    @Override
+    public String getWidgetId() {
+        return widgetId;
+    }
+
+    public void setWidgetId(String widgetId) {
+        this.widgetId = widgetId;
+    }
+
 }

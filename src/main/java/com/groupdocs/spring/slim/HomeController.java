@@ -84,7 +84,7 @@ public class HomeController extends HomeControllerBase {
 //                        AccessRights.CAN_DELETE
 //                ),
                 Utils.colorToInt(Color.black));
-//        if (annotationHandler().getUserAvatar(userGuid) == null) {
+//        if (annotationHandler().getUserAvatar(userGuid) == null){
 //            FileInputStream testAvatar = new FileInputStream(new File("E:\\Images\\333.jpeg"));
 //            byte[] bytes = new byte[testAvatar.available()];
 //            IOUtils.readFully(testAvatar, bytes);
@@ -548,7 +548,7 @@ public class HomeController extends HomeControllerBase {
                 }
             }
         }
-        return writeOutputJson(annotationHandler().uploadFileHandler(userId, uploadFileName, uploadInputStream, true));
+        return writeOutputJson(annotationHandler().uploadFileHandler(userId, uploadFileName, uploadInputStream, false));
     }
 
     /**
