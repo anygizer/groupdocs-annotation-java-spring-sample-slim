@@ -462,7 +462,7 @@ public class ApplicationConfig extends ServiceConfigurationBase {
     }
 
     @Override
-    public int getEnabledTools() {
+    public Integer getEnabledTools() {
         return enabledTools;
     }
 
@@ -471,7 +471,7 @@ public class ApplicationConfig extends ServiceConfigurationBase {
     }
 
     @Override
-    public int getConnectorPosition() {
+    public Integer getConnectorPosition() {
         return connectorPosition;
     }
 
@@ -495,7 +495,7 @@ public class ApplicationConfig extends ServiceConfigurationBase {
     }
 
     @Override
-    public int getStrikeoutMode() {
+    public Integer getStrikeoutMode() {
         return strikeoutMode;
     }
 

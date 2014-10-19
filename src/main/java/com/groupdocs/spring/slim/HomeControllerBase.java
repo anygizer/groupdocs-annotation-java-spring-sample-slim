@@ -1,16 +1,16 @@
 package com.groupdocs.spring.slim;
 
-import com.groupdocs.annotation.connector.IConnector;
-import com.groupdocs.annotation.connector.StorageType;
-import com.groupdocs.annotation.connector.data.JsonDataConnector;
-import com.groupdocs.annotation.connector.data.XmlDataConnector;
-import com.groupdocs.annotation.connector.db.MssqlDatabaseConnector;
-import com.groupdocs.annotation.connector.db.MysqlDatabaseConnector;
-import com.groupdocs.annotation.connector.db.PostgresqlDatabaseConnector;
-import com.groupdocs.annotation.connector.db.SqliteDatabaseConnector;
+import com.groupdocs.annotation.data.connector.IConnector;
+import com.groupdocs.annotation.data.connector.StorageType;
+import com.groupdocs.annotation.data.connector.data.JsonDataConnector;
+import com.groupdocs.annotation.data.connector.data.XmlDataConnector;
+import com.groupdocs.annotation.data.connector.db.MssqlDatabaseConnector;
+import com.groupdocs.annotation.data.connector.db.MysqlDatabaseConnector;
+import com.groupdocs.annotation.data.connector.db.PostgresqlDatabaseConnector;
+import com.groupdocs.annotation.data.connector.db.SqliteDatabaseConnector;
 import com.groupdocs.annotation.handler.AnnotationHandler;
 import com.groupdocs.annotation.handler.GroupDocsAnnotation;
-import com.groupdocs.annotation.utils.Utils;
+import com.groupdocs.annotation.common.Utils;
 import com.groupdocs.spring.slim.config.ApplicationConfig;
 import com.groupdocs.spring.slim.connector.CustomDatabaseConnector;
 import com.groupdocs.viewer.config.ServiceConfiguration;
