@@ -1,7 +1,9 @@
 package com.groupdocs.spring.slim;
 
+import com.groupdocs.annotation.common.Utils;
+import com.groupdocs.annotation.data.common.StorageType;
+import com.groupdocs.annotation.data.common.StoreLogic;
 import com.groupdocs.annotation.data.connector.IConnector;
-import com.groupdocs.annotation.data.connector.StorageType;
 import com.groupdocs.annotation.data.connector.data.JsonDataConnector;
 import com.groupdocs.annotation.data.connector.data.XmlDataConnector;
 import com.groupdocs.annotation.data.connector.db.MssqlDatabaseConnector;
@@ -10,7 +12,6 @@ import com.groupdocs.annotation.data.connector.db.PostgresqlDatabaseConnector;
 import com.groupdocs.annotation.data.connector.db.SqliteDatabaseConnector;
 import com.groupdocs.annotation.handler.AnnotationHandler;
 import com.groupdocs.annotation.handler.GroupDocsAnnotation;
-import com.groupdocs.annotation.common.Utils;
 import com.groupdocs.spring.slim.config.ApplicationConfig;
 import com.groupdocs.spring.slim.connector.CustomDatabaseConnector;
 import com.groupdocs.viewer.config.ServiceConfiguration;
@@ -22,7 +23,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.TimeZone;
@@ -101,6 +101,7 @@ public abstract class HomeControllerBase extends GroupDocsAnnotation {
         if (annotationHandler == null) {
             TimeZone.setDefault(TimeZone.getTimeZone("Europe/Vilnius"));
             ServiceConfiguration serviceConfiguration = new ServiceConfiguration(applicationConfig);
+            String tempPath = serviceConfiguration.getImagesPath();
             try {
 //                annotationHandler = new AnnotationHandler(serviceConfiguration);
 
@@ -111,7 +112,9 @@ public abstract class HomeControllerBase extends GroupDocsAnnotation {
                 String dbName = applicationConfig.getDbName();
                 String dbUsername = applicationConfig.getDbUsername();
                 String dbPassword = applicationConfig.getDbPassword();
-                String storagePath = Utils.or(applicationConfig.getStoragePath(), applicationConfig.getBasePath());
+                StoreLogic storeLogic = StoreLogic.fromValue(applicationConfig.getStoreLogic());
+                String storagePath = Utils.or(applicationConfig.getStoragePath(), tempPath);
+
 
                 if (storageType != null && !storageType.isEmpty()) {
                     switch (StorageType.fromValue(storageType)) {
@@ -119,7 +122,7 @@ public abstract class HomeControllerBase extends GroupDocsAnnotation {
                             connector = null;
                             break;
                         case SQLITE:
-                            connector = new SqliteDatabaseConnector(storagePath + File.separator + "customSQLITEdatabaseStorage.db");
+                            connector = new SqliteDatabaseConnector(storagePath, "customSQLITEdatabaseStorage.db");
                             break;
                         case MYSQL:
                             connector = new MysqlDatabaseConnector(dbServer, dbPort, dbName, dbUsername, dbPassword);
@@ -128,10 +131,10 @@ public abstract class HomeControllerBase extends GroupDocsAnnotation {
                             connector = new MssqlDatabaseConnector(dbServer, dbPort, dbName, dbUsername, dbPassword);
                             break;
                         case JSON:
-                            connector = new JsonDataConnector(storagePath);
+                            connector = new JsonDataConnector(storagePath, storeLogic);
                             break;
                         case XML:
-                            connector = new XmlDataConnector(storagePath);
+                            connector = new XmlDataConnector(storagePath, storeLogic);
                             break;
                         case POSTGRE:
                             connector = new PostgresqlDatabaseConnector(dbServer, dbPort, dbName, dbUsername, dbPassword);

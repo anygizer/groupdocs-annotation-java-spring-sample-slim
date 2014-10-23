@@ -1,10 +1,11 @@
 package com.groupdocs.spring.slim;
 
+import com.groupdocs.annotation.common.Utils;
 import com.groupdocs.annotation.domain.AccessRights;
 import com.groupdocs.annotation.domain.request.ImportAnnotationsData;
 import com.groupdocs.annotation.domain.response.StatusResponse;
 import com.groupdocs.annotation.exception.AnnotationException;
-import com.groupdocs.annotation.common.Utils;
+import com.groupdocs.viewer.config.ServiceConfiguration;
 import com.groupdocs.viewer.domain.path.EncodedPath;
 import com.groupdocs.viewer.domain.path.GroupDocsPath;
 import com.groupdocs.viewer.domain.path.TokenId;
@@ -64,7 +65,10 @@ public class HomeController extends HomeControllerBase {
         // Initialization of Viewer with document from this path
         GroupDocsPath path = null;
         if (file != null && !file.isEmpty()) {
-            path = new EncodedPath(file, annotationHandler().getConfiguration());
+            ServiceConfiguration configuration = annotationHandler().getConfiguration();
+            if (configuration != null) {
+                path = new EncodedPath(file, configuration);
+            }
         } else if (tokenId != null && !tokenId.isEmpty()) {
             TokenId tki = new TokenId(tokenId, applicationConfig.getEncryptionKey());
             if (!tki.isExpired()) {
@@ -560,7 +564,7 @@ public class HomeController extends HomeControllerBase {
     @Override
     @RequestMapping(value = IMPORT_ANNOTATIONS_HANDLER, method = RequestMethod.POST)
     public ResponseEntity<String> importAnnotationsHandler(HttpServletRequest request, HttpServletResponse response) {
-        ImportAnnotationsData importAnnotationsData = null;
+        ImportAnnotationsData importAnnotationsData;
         try {
             importAnnotationsData = Utils.getObjectData(Utils.getBody(request), ImportAnnotationsData.class);
             String fileGuid = importAnnotationsData.getFileGuid();
@@ -577,10 +581,11 @@ public class HomeController extends HomeControllerBase {
 //                        AccessRights.CAN_DELETE
 //                ),
                     Utils.colorToInt(Color.black));
+            return writeOutputJson(Utils.toJson(annotationHandler().importAnnotations(fileGuid, userGuid)));
         } catch (AnnotationException e) {
             e.printStackTrace(); // Logger
         }
-        return writeOutputJson(annotationHandler().importAnnotationsHandler(request, response));
+        return null;
     }
 
     /**
@@ -594,6 +599,19 @@ public class HomeController extends HomeControllerBase {
     @RequestMapping(value = GET_PRINT_VIEW_HANDLER, method = RequestMethod.POST)
     public ResponseEntity<String> getPrintViewHandler(HttpServletRequest request, HttpServletResponse response) {
         return writeOutputJson(annotationHandler().getPrintViewHandler(request, response));
+    }
+
+    @Override
+    @RequestMapping(value = GET_PRINT_DOCUMENT_PAGE_IMAGE_HANDLER, method = RequestMethod.GET)
+    public Object getPrintDocumentPageImageHandler(@RequestParam("path") String guid, @RequestParam("pageIndex") Integer pageIndex, HttpServletResponse response) {
+        writeOutput(annotationHandler().getPrintDocumentPageImageHandler(guid, pageIndex, response), response);
+        return null;
+    }
+
+    @Override
+    @RequestMapping(value = RESTORE_ANNOTATION_REPLIES_HANDLER, method = RequestMethod.POST)
+    public Object restoreAnnotationRepliesHandler(HttpServletRequest request, HttpServletResponse response) {
+        return writeOutputJson(annotationHandler().restoreAnnotationRepliesHandler(request, response));
     }
 
     /**
@@ -618,18 +636,5 @@ public class HomeController extends HomeControllerBase {
     @RequestMapping(value = ATMOSPHERE_ANNOTATION, method = RequestMethod.POST)
     public void onAtmosphereMessage(AtmosphereResource resource) {
         annotationHandler().onAtmosphereMessage(resource);
-    }
-
-    @Override
-    @RequestMapping(value = GET_PRINT_DOCUMENT_PAGE_IMAGE_HANDLER, method = RequestMethod.GET)
-    public Object getPrintDocumentPageImageHandler(@RequestParam("path") String guid, @RequestParam("pageIndex") Integer pageIndex, HttpServletResponse response) {
-        writeOutput(annotationHandler().getPrintDocumentPageImageHandler(guid, pageIndex, response), response);
-        return null;
-    }
-
-    @Override
-    @RequestMapping(value = RESTORE_ANNOTATION_REPLIES_HANDLER, method = RequestMethod.POST)
-    public Object restoreAnnotationRepliesHandler(HttpServletRequest request, HttpServletResponse response) {
-        return writeOutputJson(annotationHandler().restoreAnnotationRepliesHandler(request, response));
     }
 }
