@@ -5,6 +5,8 @@ import com.urbanmania.spring.beans.factory.config.annotations.Property;
 import org.springframework.stereotype.Component;
 
 /**
+ * Spring sample configuration class
+ *
  * @author Aleksey Permyakov
  */
 @Component
@@ -96,7 +98,7 @@ public class ApplicationConfig extends ServiceConfigurationBase {
     @Property(key = "groupdocs.annotation.areaToolOptionsPenDashStyle")
     protected Integer areaToolOptionsPenDashStyle;
     @Property(key = "groupdocs.annotation.areaToolOptionsBrushColor")
-    protected Integer areaToolOptionsBrushColor;
+    protected String areaToolOptionsBrushColor;
     @Property(key = "groupdocs.annotation.polylineToolOptionsPenWidth")
     protected Integer polylineToolOptionsPenWidth;
     @Property(key = "groupdocs.annotation.polylineToolOptionsPenColor")
@@ -104,7 +106,7 @@ public class ApplicationConfig extends ServiceConfigurationBase {
     @Property(key = "groupdocs.annotation.polylineToolOptionsPenDashStyle")
     protected Integer polylineToolOptionsPenDashStyle;
     @Property(key = "groupdocs.annotation.polylineToolOptionsBrushColor")
-    protected Integer polylineToolOptionsBrushColor;
+    protected String polylineToolOptionsBrushColor;
     @Property(key = "groupdocs.annotation.arrowToolOptionsPenWidth")
     protected Integer arrowToolOptionsPenWidth;
     @Property(key = "groupdocs.annotation.arrowToolOptionsPenColor")
@@ -112,7 +114,13 @@ public class ApplicationConfig extends ServiceConfigurationBase {
     @Property(key = "groupdocs.annotation.arrowToolOptionsPenDashStyle")
     protected Integer arrowToolOptionsPenDashStyle;
     @Property(key = "groupdocs.annotation.arrowToolOptionsBrushColor")
-    protected Integer arrowToolOptionsBrushColor;
+    protected String arrowToolOptionsBrushColor;
+    @Property(key = "groupdocs.annotation.penColor")
+    protected String penColor;
+    @Property(key = "groupdocs.annotation.penWidth")
+    protected Integer penWidth;
+    @Property(key = "groupdocs.annotation.penStyle")
+    protected Integer penStyle;
     @Property(key = "groupdocs.annotation.enabledTools")
     protected Integer enabledTools;
     @Property(key = "groupdocs.annotation.connectorPosition")
@@ -663,7 +671,7 @@ public class ApplicationConfig extends ServiceConfigurationBase {
      * {@inheritDoc}
      */
     @Override
-    public Integer getAreaToolOptionsBrushColor() {
+    public String getAreaToolOptionsBrushColor() {
         return areaToolOptionsBrushColor;
     }
 
@@ -672,7 +680,7 @@ public class ApplicationConfig extends ServiceConfigurationBase {
      *
      * @param areaToolOptionsBrushColor Value to set for property 'areaToolOptionsBrushColor'.
      */
-    public void setAreaToolOptionsBrushColor(Integer areaToolOptionsBrushColor) {
+    public void setAreaToolOptionsBrushColor(String areaToolOptionsBrushColor) {
         this.areaToolOptionsBrushColor = areaToolOptionsBrushColor;
     }
 
@@ -731,7 +739,7 @@ public class ApplicationConfig extends ServiceConfigurationBase {
      * {@inheritDoc}
      */
     @Override
-    public Integer getPolylineToolOptionsBrushColor() {
+    public String getPolylineToolOptionsBrushColor() {
         return polylineToolOptionsBrushColor;
     }
 
@@ -740,7 +748,7 @@ public class ApplicationConfig extends ServiceConfigurationBase {
      *
      * @param polylineToolOptionsBrushColor Value to set for property 'polylineToolOptionsBrushColor'.
      */
-    public void setPolylineToolOptionsBrushColor(Integer polylineToolOptionsBrushColor) {
+    public void setPolylineToolOptionsBrushColor(String polylineToolOptionsBrushColor) {
         this.polylineToolOptionsBrushColor = polylineToolOptionsBrushColor;
     }
 
@@ -799,7 +807,7 @@ public class ApplicationConfig extends ServiceConfigurationBase {
      * {@inheritDoc}
      */
     @Override
-    public Integer getArrowToolOptionsBrushColor() {
+    public String getArrowToolOptionsBrushColor() {
         return arrowToolOptionsBrushColor;
     }
 
@@ -808,8 +816,59 @@ public class ApplicationConfig extends ServiceConfigurationBase {
      *
      * @param arrowToolOptionsBrushColor Value to set for property 'arrowToolOptionsBrushColor'.
      */
-    public void setArrowToolOptionsBrushColor(Integer arrowToolOptionsBrushColor) {
+    public void setArrowToolOptionsBrushColor(String arrowToolOptionsBrushColor) {
         this.arrowToolOptionsBrushColor = arrowToolOptionsBrushColor;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer getPenWidth() {
+        return penWidth;
+    }
+
+    /**
+     * Setter for property 'penWidth'.
+     *
+     * @param penWidth Value to set for property 'penWidth'.
+     */
+    public void setPenWidth(Integer penWidth) {
+        this.penWidth = penWidth;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getPenColor() {
+        return penColor;
+    }
+
+    /**
+     * Setter for property 'penColor'.
+     *
+     * @param penColor Value to set for property 'penColor'.
+     */
+    public void setPenColor(String penColor) {
+        this.penColor = penColor;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Integer getPenStyle() {
+        return penStyle;
+    }
+
+    /**
+     * Setter for property 'penStyle'.
+     *
+     * @param penStyle Value to set for property 'penStyle'.
+     */
+    public void setPenStyle(Integer penStyle) {
+        this.penStyle = penStyle;
     }
 
     /**
