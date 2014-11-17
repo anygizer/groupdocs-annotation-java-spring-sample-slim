@@ -11,7 +11,7 @@ import com.groupdocs.annotation.data.connector.db.MysqlDatabaseConnector;
 import com.groupdocs.annotation.data.connector.db.PostgresqlDatabaseConnector;
 import com.groupdocs.annotation.data.connector.db.SqliteDatabaseConnector;
 import com.groupdocs.annotation.handler.AnnotationHandler;
-import com.groupdocs.annotation.handler.GroupDocsAnnotation;
+import com.groupdocs.annotation.handler.IGroupDocsAnnotation;
 import com.groupdocs.spring.slim.config.ApplicationConfig;
 import com.groupdocs.spring.slim.connector.CustomDatabaseConnector;
 import com.groupdocs.viewer.config.ServiceConfiguration;
@@ -25,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +33,7 @@ import java.util.logging.Logger;
 /**
  * @author Alex Bobkov
  */
-public abstract class HomeControllerBase extends GroupDocsAnnotation {
+public abstract class HomeControllerBase implements IGroupDocsAnnotation {
     @Autowired
     protected ApplicationConfig applicationConfig;
     private AnnotationHandler annotationHandler;
@@ -144,9 +145,43 @@ public abstract class HomeControllerBase extends GroupDocsAnnotation {
                             break;
                     }
                 }
-                annotationHandler = new AnnotationHandler(serviceConfiguration, connector);
+//                // Initialize constructors for create custom entities instead of embedded
+//                AnnotationConstructor.setConstructor(new IConstructor<IAnnotation>() {
+//                    @Override
+//                    public IAnnotation create() {
+//                        return new MyCustomEntityClass();
+//                    }
+//
+//                    @Override
+//                    public IAnnotation create(IAnnotation obj) {
+//                        MyCustomEntityClass /* MyCustomEntityClass implements IAnnotation */ myCustomEntityClass = new MyCustomEntityClass();
+//                        myCustomEntityClass.setAnyPropertyIfNeed(object.getAnyproperty());
+//                        return myCustomEntityClass;
+//                    }
+//                });
+//                CollaboratorConstructor.setConstructor(...); ...
 
-//                annotationHandler = new AnnotationHandler(config, new CustomInputDataHandler(config));
+                annotationHandler = AnnotationHandler.create(serviceConfiguration)
+                        .withConnector(connector)
+                        .withLocale(Locale.CANADA)
+//                        .withInputDataHandler(new CustomInputDataHandler(applicationConfig))
+//                        .withAccessCallback(new ICallback<Boolean, Three<AnnotationEvent, IUser, IDocument>>() {
+//                            @Override
+//                            public Boolean onCallback(Three<AnnotationEvent, IUser, IDocument> param) {
+//                                AnnotationEvent annotationEvent = param.one;
+//                                switch (annotationEvent) {
+//                                    case CreateAnnotation:
+//                                        // Check permissions and return true of false
+//                                        break;
+//                                    case DeleteAnnotation:
+//                                        // Check permissions and return true of false
+//                                        break;
+//                                    // ...
+//                                }
+//                                return true;
+//                            }
+//                        })
+                        .end();
 //                InputDataHandler.setInputDataHandler(new CustomInputDataHandler(config));
             } catch (Exception e) {
                 // TODO: logger
