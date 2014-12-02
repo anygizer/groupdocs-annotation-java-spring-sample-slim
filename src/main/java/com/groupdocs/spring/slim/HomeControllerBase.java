@@ -1,5 +1,7 @@
 package com.groupdocs.spring.slim;
 
+import com.groupdocs.annotation.common.ICallback;
+import com.groupdocs.annotation.common.Pair;
 import com.groupdocs.annotation.common.Utils;
 import com.groupdocs.annotation.data.common.StorageType;
 import com.groupdocs.annotation.data.common.StoreLogic;
@@ -10,6 +12,10 @@ import com.groupdocs.annotation.data.connector.db.MssqlDatabaseConnector;
 import com.groupdocs.annotation.data.connector.db.MysqlDatabaseConnector;
 import com.groupdocs.annotation.data.connector.db.PostgresqlDatabaseConnector;
 import com.groupdocs.annotation.data.connector.db.SqliteDatabaseConnector;
+import com.groupdocs.annotation.data.tables.interfaces.IDocument;
+import com.groupdocs.annotation.data.tables.interfaces.IUser;
+import com.groupdocs.annotation.enums.AccessRights;
+import com.groupdocs.annotation.exception.AnnotationException;
 import com.groupdocs.annotation.handler.AnnotationHandler;
 import com.groupdocs.annotation.handler.IGroupDocsAnnotation;
 import com.groupdocs.spring.slim.config.ApplicationConfig;
@@ -23,6 +29,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
@@ -107,7 +114,7 @@ public abstract class HomeControllerBase implements IGroupDocsAnnotation {
 //                annotationHandler = new AnnotationHandler(serviceConfiguration);
 
                 IConnector connector = null;
-                String storageType = applicationConfig.getStorageType();
+                String storageTypeString = applicationConfig.getStorageType();
                 String dbServer = applicationConfig.getDbServer();
                 Integer dbPort = applicationConfig.getDbPort();
                 String dbName = applicationConfig.getDbName();
@@ -116,9 +123,12 @@ public abstract class HomeControllerBase implements IGroupDocsAnnotation {
                 StoreLogic storeLogic = StoreLogic.fromValue(applicationConfig.getStoreLogic());
                 String storagePath = Utils.or(applicationConfig.getStoragePath(), tempPath);
 
-
-                if (storageType != null && !storageType.isEmpty()) {
-                    switch (StorageType.fromValue(storageType)) {
+                if (storageTypeString != null && !storageTypeString.isEmpty()) {
+                    StorageType storageType = StorageType.fromValue(storageTypeString);
+                    if (storageType == null){
+                        throw new AnnotationException("Unknown storage type: " + storageTypeString);
+                    }
+                    switch (storageType) {
                         case DEFAULT:
                             connector = null;
                             break;
@@ -161,28 +171,45 @@ public abstract class HomeControllerBase implements IGroupDocsAnnotation {
 //                });
 //                CollaboratorConstructor.setConstructor(...); ...
 
-                annotationHandler = AnnotationHandler.create(serviceConfiguration)
-                        .withConnector(connector)
-                        .withLocale(Locale.CANADA)
-//                        .withInputDataHandler(new CustomInputDataHandler(applicationConfig))
-//                        .withAccessCallback(new ICallback<Boolean, Three<AnnotationEvent, IUser, IDocument>>() {
-//                            @Override
-//                            public Boolean onCallback(Three<AnnotationEvent, IUser, IDocument> param) {
-//                                AnnotationEvent annotationEvent = param.one;
-//                                switch (annotationEvent) {
-//                                    case CreateAnnotation:
-//                                        // Check permissions and return true of false
-//                                        break;
-//                                    case DeleteAnnotation:
-//                                        // Check permissions and return true of false
-//                                        break;
-//                                    // ...
-//                                }
-//                                return true;
-//                            }
-//                        })
-                        .end();
-//                InputDataHandler.setInputDataHandler(new CustomInputDataHandler(config));
+                // It need for date formatting
+                Locale.setDefault(Locale.CANADA);
+                //
+                annotationHandler = new AnnotationHandler(serviceConfiguration, connector);
+                // This callback will be called for each case when collaborator should be created
+                annotationHandler.setCollaboratorCallback(new ICallback<Pair<Integer, Color>, Pair<IUser, IDocument>>() {
+                    @Override
+                    public Pair<Integer, Color> onCallback(Pair<IUser, IDocument> param) {
+                /*
+                IUser user = param.one;
+                IDocument document = param.two;
+                */
+                        // User collaborator for document will be created with returned access rights and color
+                        // Default CollaboratorCallback is made similarly
+                        return new Pair<Integer, Color>(AccessRights.All.value(), Color.red);
+                    }
+                });
+
+//        AnnotationHandler annotationHandler = new AnnotationHandler(serviceConfiguration, connector, new CustomInputDataHandler(applicationConfig));
+//        annotationHandler.setInputDataHandler(new CustomInputDataHandler(applicationConfig));
+
+                // Will be called for each case when collaborator ask access to some event from AnnotationEvent
+                // Return value have priority is more than at Collaborator rights
+//        annotationHandler.setAccessCallback(new ICallback<Boolean, Three<AnnotationEvent,IUser,IDocument>>() {
+//            @Override
+//            public Boolean onCallback(Three<AnnotationEvent, IUser, IDocument> param) {
+//                AnnotationEvent annotationEvent = param.one;
+//                switch (annotationEvent) {
+//                    case CreateAnnotation:
+//                        // Check permissions and return true of false
+//                        break;
+//                    case DeleteAnnotation:
+//                        // Check permissions and return true of false
+//                        break;
+//                    // ...
+//                }
+//                return true;
+//            }
+//        });
             } catch (Exception e) {
                 // TODO: logger
                 e.printStackTrace();
