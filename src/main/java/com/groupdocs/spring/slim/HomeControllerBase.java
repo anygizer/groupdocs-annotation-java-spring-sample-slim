@@ -109,7 +109,7 @@ public abstract class HomeControllerBase implements IGroupDocsAnnotation {
         if (annotationHandler == null) {
             TimeZone.setDefault(TimeZone.getTimeZone("Europe/Vilnius"));
             ServiceConfiguration serviceConfiguration = new ServiceConfiguration(applicationConfig);
-            String tempPath = serviceConfiguration.getImagesPath();
+            String tempPath = serviceConfiguration.getTempDir();
             try {
 //                annotationHandler = new AnnotationHandler(serviceConfiguration);
 
@@ -125,7 +125,7 @@ public abstract class HomeControllerBase implements IGroupDocsAnnotation {
 
                 if (storageTypeString != null && !storageTypeString.isEmpty()) {
                     StorageType storageType = StorageType.fromValue(storageTypeString);
-                    if (storageType == null){
+                    if (storageType == null) {
                         throw new AnnotationException("Unknown storage type: " + storageTypeString);
                     }
                     switch (storageType) {
