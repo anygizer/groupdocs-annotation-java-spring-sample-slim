@@ -1,4 +1,4 @@
-package com.groupdocs.spring.slim.connector;
+package com.groupdocs.spring.slim.data.connector;
 
 import com.groupdocs.annotation.data.connector.db.AbstractDatabaseConnector;
 import com.groupdocs.annotation.exception.AnnotationException;

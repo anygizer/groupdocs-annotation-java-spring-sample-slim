@@ -19,7 +19,8 @@ import com.groupdocs.annotation.exception.AnnotationException;
 import com.groupdocs.annotation.handler.AnnotationHandler;
 import com.groupdocs.annotation.handler.IGroupDocsAnnotation;
 import com.groupdocs.spring.slim.config.ApplicationConfig;
-import com.groupdocs.spring.slim.connector.CustomDatabaseConnector;
+import com.groupdocs.spring.slim.data.connector.CustomDatabaseConnector;
+import com.groupdocs.spring.slim.data.connector.ICustomConnector;
 import com.groupdocs.viewer.config.ServiceConfiguration;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -175,6 +176,9 @@ public abstract class HomeControllerBase implements IGroupDocsAnnotation {
                 Locale.setDefault(Locale.CANADA);
                 //
                 annotationHandler = new AnnotationHandler(serviceConfiguration, connector);
+                if (connector instanceof ICustomConnector){
+                    ((ICustomConnector)connector).setEnvironmentCreator(annotationHandler);
+                }
                 // This callback will be called for each case when collaborator should be created
                 annotationHandler.setCollaboratorCallback(new ICallback<Pair<Integer, Color>, Pair<IUser, IDocument>>() {
                     @Override
