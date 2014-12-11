@@ -4,6 +4,7 @@ import com.groupdocs.annotation.data.connector.data.AbstractDataConnector;
 import com.groupdocs.annotation.data.dao.interfaces.*;
 import com.groupdocs.annotation.data.environment.IEnvironmentCreator;
 import com.groupdocs.annotation.exception.AnnotationException;
+import com.groupdocs.data.dao.*;
 import com.groupdocs.spring.slim.data.dao.*;
 
 /**
@@ -16,7 +17,7 @@ public class CustomXmlDataConnector extends AbstractDataConnector implements ICu
 
     @Override
     public IAnnotationDao getAnnotationDao() throws AnnotationException {
-        return new CustomXmlAnnotationDaoImpl(environmentCreator, getDaoFactory());
+        return new CustomXmlAnnotationDaoImpl(environmentCreator);
     }
 
     @Override

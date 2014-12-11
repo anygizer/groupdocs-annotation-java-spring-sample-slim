@@ -412,6 +412,8 @@ public class ApplicationConfig extends ServiceConfiguration {
     private Boolean printAnnotations;
     @Property(key = "groupdocs.annotation.localization")
     private String localization;
+    @Property(key = "groupdocs.annotation.disableAtmosphere")
+    private Boolean disableAtmosphere;
     @Property(key = "groupdocs.annotation.fileDisplayName")
     private String fileDisplayName;
 
@@ -607,7 +609,6 @@ public class ApplicationConfig extends ServiceConfiguration {
      *
      * @return Value for property 'useAuthorization'.
      */
-    @SuppressWarnings("unused")
     public Boolean isUseAuthorization() {
         return useAuthorization;
     }
@@ -1916,7 +1917,6 @@ public class ApplicationConfig extends ServiceConfiguration {
      *
      * @param fileDisplayName the file display name
      */
-    @SuppressWarnings("unused")
     public void setFileDisplayName(String fileDisplayName) {
         this.fileDisplayName = fileDisplayName;
     }
@@ -2043,6 +2043,25 @@ public class ApplicationConfig extends ServiceConfiguration {
     @SuppressWarnings("unused")
     public void setPrintAnnotations(Boolean printAnnotations) {
         this.printAnnotations = printAnnotations;
+    }
+
+    /**
+     * Gets disable atmosphere.
+     *
+     * @return the disable atmosphere
+     */
+    @Override
+    public Boolean isDisableAtmosphere() {
+        return disableAtmosphere;
+    }
+
+    /**
+     * Sets disable atmosphere.
+     *
+     * @param disableAtmosphere the disable atmosphere
+     */
+    public void setDisableAtmosphere(Boolean disableAtmosphere) {
+        this.disableAtmosphere = disableAtmosphere;
     }
 
     /**
