@@ -4,7 +4,6 @@ import com.groupdocs.annotation.data.connector.data.AbstractDataConnector;
 import com.groupdocs.annotation.data.dao.interfaces.*;
 import com.groupdocs.annotation.data.environment.IEnvironmentCreator;
 import com.groupdocs.annotation.exception.AnnotationException;
-import com.groupdocs.data.dao.*;
 import com.groupdocs.spring.slim.data.dao.*;
 
 /**
