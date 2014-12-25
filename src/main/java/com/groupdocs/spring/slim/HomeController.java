@@ -46,7 +46,7 @@ public class HomeController extends HomeControllerBase {
     }
 
     /**
-     * Request with parameters
+     * Home page request with parameters
      *
      * @param model    view model
      * @param request  HTTP servlet request
@@ -57,7 +57,7 @@ public class HomeController extends HomeControllerBase {
      * @return rendered page
      * @throws Exception
      */
-    @RequestMapping(value = "/view", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "file", required = false) String file, @RequestParam(value = "tokenId", required = false) String tokenId, @RequestParam(value = "userName", required = false) final String userName) throws Exception {
         // Configure localization
         ILocalization localization = null;
@@ -81,6 +81,9 @@ public class HomeController extends HomeControllerBase {
             if (!tki.isExpired()) {
                 path = tki;
             }
+        }else{
+            ServiceConfiguration configuration = annotationHandler().getConfiguration();
+            path = new EncodedPath("GroupDocs_Demo.doc", configuration);
         }
         final String initialPath = (path == null) ? "" : path.getPath();
         final String userGuid = annotationHandler().getUserGuid(userName);
