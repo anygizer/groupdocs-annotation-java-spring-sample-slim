@@ -31,21 +31,6 @@ import java.io.IOException;
 public class HomeController extends HomeControllerBase {
 
     /**
-     * Home page request
-     *
-     * @param model    view model
-     * @param request  HTTP servlet request
-     * @param response http servlet response
-     * @param userName user name
-     * @return rendered page
-     * @throws Exception
-     */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "userName", required = false) String userName) throws Exception {
-        return index(model, request, response, "GroupDocs_Demo.doc", null, userName);
-    }
-
-    /**
      * Home page request with parameters
      *
      * @param model    view model
