@@ -4,7 +4,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.groupdocs.annotation.common.Utils;
+import com.groupdocs.annotation.data.common.StoreLogic;
 import com.groupdocs.annotation.data.dao.interfaces.IDao;
+import com.groupdocs.annotation.data.dao.xml.AbstractXmlDao;
 import com.groupdocs.annotation.data.environment.Environment;
 import com.groupdocs.annotation.data.environment.IEnvironmentCreator;
 import com.groupdocs.annotation.data.tables.interfaces.ITable;
@@ -16,6 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static com.groupdocs.annotation.data.dao.xml.AbstractXmlDao.toXml;
 
 /**
  * @author Aleksey Permyakov (13.10.2014)
@@ -130,7 +134,7 @@ public abstract class CustomAbstractDaoImpl<T extends ITable> implements IDao<T>
     }
 
     protected boolean saveObjectAsXml(Object object, OutputStream outputStream) {
-        String json = Utils.toXml(object);
+        String json = toXml(object);
         try {
             outputStream.write(json.getBytes());
         } catch (IOException e) {
