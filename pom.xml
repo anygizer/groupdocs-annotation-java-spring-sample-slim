@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.groupdocs.samples</groupId>
     <artifactId>groupdocs-annotation-tomcat-slim</artifactId>
-    <version>1.9.0</version>
+    <version>1.8.2</version>
     <packaging>war</packaging>
 
     <name>GroupDocs Java Annotation - Sample Spring (Slim)</name>
@@ -112,6 +112,11 @@
         </dependency>
         <!-- End Aspose -->
         <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.2.4</version>
+        </dependency>
+        <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.4</version>
@@ -170,12 +175,18 @@
         </dependency>
         -->
         <!-- Comment this dependency if you not use SQLite database -->
-        <!--<dependency>-->
-        <!--<groupId>org.xerial</groupId>-->
-        <!--<artifactId>sqlite-jdbc</artifactId>-->
-        <!--<version>3.7.2</version>-->
-        <!--<type>jar</type>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.7.2</version>
+            <type>jar</type>
+        </dependency>
+        <!-- Comment this dependency if you not use XML Connector -->
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.3.1</version>
+        </dependency>
         <!-- Uncomment this dependency to use Microsoft SQL Server -->
         <!--
         <dependency>
@@ -228,25 +239,11 @@
             <version>2.1.4</version>
         </dependency>
         -->
-        <!-- Uncomment this dependency to use XML Connector -->
-        <!--
-        <dependency>
-            <groupId>com.thoughtworks.xstream</groupId>
-            <artifactId>xstream</artifactId>
-            <version>1.3.1</version>
-        </dependency>
-        -->
         <!-- Comment this dependency if you not use Atmosphere -->
         <dependency>
             <groupId>org.atmosphere</groupId>
             <artifactId>atmosphere-runtime</artifactId>
             <version>2.2.3</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.2.4</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>
