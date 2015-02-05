@@ -272,7 +272,7 @@ public class HomeController extends HomeControllerBase {
         try {
             writeOutput(annotationHandler().getDocumentPageImageHandler(guid, width, quality, usePdf, pageIndex, isPrint, response), response);
         } catch (Exception e) {
-            Utils.log(HomeController.class, e);
+            Utils.err(HomeController.class, e);
             return toJson(new StatusResult(false, e.getMessage()));
         }
         return null;
@@ -439,7 +439,7 @@ public class HomeController extends HomeControllerBase {
         try {
             return writeOutputJson(annotationHandler().listAnnotationsHandler(request, response));
         } catch (AnnotationException e) {
-            Utils.log(HomeController.class, e);
+            Utils.err(HomeController.class, e);
             return toJson(new StatusResult(false, e.getMessage()));
         }
     }
@@ -456,7 +456,7 @@ public class HomeController extends HomeControllerBase {
         try {
             return writeOutputJson(annotationHandler().exportAnnotationsHandler(request, response));
         } catch (AnnotationException e) {
-            Utils.log(HomeController.class, e);
+            Utils.err(HomeController.class, e);
             return toJson(new StatusResult(false, e.getMessage()));
         }
     }
@@ -473,7 +473,7 @@ public class HomeController extends HomeControllerBase {
         try {
             return writeOutputJson(annotationHandler().getPdfVersionOfDocumentHandler(request, response));
         } catch (AnnotationException e) {
-            Utils.log(HomeController.class, e);
+            Utils.err(HomeController.class, e);
             return toJson(new StatusResult(false, e.getMessage()));
         }
     }
@@ -490,7 +490,7 @@ public class HomeController extends HomeControllerBase {
         try {
             return writeOutputJson(annotationHandler().createAnnotationHandler(request, response));
         } catch (AnnotationException e) {
-            Utils.log(HomeController.class, e);
+            Utils.err(HomeController.class, e);
             return writeOutputJson(toJson(new StatusResult(false, e.getMessage())));
         }
     }
@@ -508,7 +508,7 @@ public class HomeController extends HomeControllerBase {
         try {
             return annotationHandler().getAvatarHandler(request, response, userId);
         } catch (AnnotationException e) {
-            Utils.log(HomeController.class, e);
+            Utils.err(HomeController.class, e);
             return toJson(new StatusResult(false, e.getMessage()));
         }
     }
@@ -525,7 +525,7 @@ public class HomeController extends HomeControllerBase {
         try {
             return writeOutputJson(annotationHandler().addAnnotationReplyHandler(request, response));
         } catch (AnnotationException e) {
-            Utils.log(HomeController.class, e);
+            Utils.err(HomeController.class, e);
             return toJson(new StatusResult(false, e.getMessage()));
         }
     }
@@ -542,7 +542,7 @@ public class HomeController extends HomeControllerBase {
         try {
             return writeOutputJson(annotationHandler().editAnnotationReplyHandler(request, response));
         } catch (AnnotationException e) {
-            Utils.log(HomeController.class, e);
+            Utils.err(HomeController.class, e);
             return toJson(new StatusResult(false, e.getMessage()));
         }
     }
@@ -559,7 +559,7 @@ public class HomeController extends HomeControllerBase {
         try {
             return writeOutputJson(annotationHandler().deleteAnnotationReplyHandler(request, response));
         } catch (AnnotationException e) {
-            Utils.log(HomeController.class, e);
+            Utils.err(HomeController.class, e);
             return toJson(new StatusResult(false, e.getMessage()));
         }
     }
@@ -576,7 +576,7 @@ public class HomeController extends HomeControllerBase {
         try {
             return writeOutputJson(annotationHandler().deleteAnnotationHandler(request, response));
         } catch (AnnotationException e) {
-            Utils.log(HomeController.class, e);
+            Utils.err(HomeController.class, e);
             return toJson(new StatusResult(false, e.getMessage()));
         }
     }
@@ -593,7 +593,7 @@ public class HomeController extends HomeControllerBase {
         try {
             return writeOutputJson(annotationHandler().saveTextFieldHandler(request, response));
         } catch (AnnotationException e) {
-            Utils.log(HomeController.class, e);
+            Utils.err(HomeController.class, e);
             return toJson(new StatusResult(false, e.getMessage()));
         }
     }
@@ -610,7 +610,7 @@ public class HomeController extends HomeControllerBase {
         try {
             return writeOutputJson(annotationHandler().setTextFieldColorHandler(request, response));
         } catch (AnnotationException e) {
-            Utils.log(HomeController.class, e);
+            Utils.err(HomeController.class, e);
             return toJson(new StatusResult(false, e.getMessage()));
         }
     }
@@ -627,7 +627,7 @@ public class HomeController extends HomeControllerBase {
         try {
             return writeOutputJson(annotationHandler().moveAnnotationMarkerHandler(request, response));
         } catch (AnnotationException e) {
-            Utils.log(HomeController.class, e);
+            Utils.err(HomeController.class, e);
             return toJson(new StatusResult(false, e.getMessage()));
         }
     }
@@ -644,7 +644,7 @@ public class HomeController extends HomeControllerBase {
         try {
             return writeOutputJson(annotationHandler().resizeAnnotationHandler(request, response));
         } catch (AnnotationException e) {
-            Utils.log(HomeController.class, e);
+            Utils.err(HomeController.class, e);
             return toJson(new StatusResult(false, e.getMessage()));
         }
     }
@@ -661,7 +661,7 @@ public class HomeController extends HomeControllerBase {
         try {
             return writeOutputJson(annotationHandler().getDocumentCollaboratorsHandler(request, response));
         } catch (AnnotationException e) {
-            Utils.log(HomeController.class, e);
+            Utils.err(HomeController.class, e);
             return toJson(new StatusResult(false, e.getMessage()));
         }
     }
@@ -685,7 +685,7 @@ public class HomeController extends HomeControllerBase {
                 return null;
             }
         } catch (IOException | AnnotationException e) {
-            Utils.log(HomeController.class, e);
+            Utils.err(HomeController.class, e);
             return writeOutputJson(toJson(new StatusResult(false, e.getMessage())));
         }
     }
@@ -702,7 +702,7 @@ public class HomeController extends HomeControllerBase {
         try {
             return writeOutputJson(annotationHandler().importAnnotationsHandler(request, response));
         } catch (AnnotationException e) {
-            Utils.log(HomeController.class, e);
+            Utils.err(HomeController.class, e);
             return writeOutputJson(toJson(new StatusResult(false, e.getMessage())));
         }
     }
@@ -719,7 +719,7 @@ public class HomeController extends HomeControllerBase {
         try {
             return writeOutputJson(annotationHandler().getPrintViewHandler(request, response));
         } catch (AnnotationException e) {
-            Utils.log(HomeController.class, e);
+            Utils.err(HomeController.class, e);
             return writeOutputJson(toJson(new StatusResult(false, e.getMessage())));
         }
     }
@@ -731,7 +731,7 @@ public class HomeController extends HomeControllerBase {
             writeOutput(annotationHandler().getPrintDocumentPageImageHandler(guid, pageIndex, response), response);
             return null;
         } catch (AnnotationException e) {
-            Utils.log(HomeController.class, e);
+            Utils.err(HomeController.class, e);
             return toJson(new StatusResult(false, e.getMessage()));
         }
     }
@@ -742,7 +742,7 @@ public class HomeController extends HomeControllerBase {
         try {
             return writeOutputJson(annotationHandler().restoreAnnotationRepliesHandler(request, response));
         } catch (AnnotationException e) {
-            Utils.log(HomeController.class, e);
+            Utils.err(HomeController.class, e);
             return toJson(new StatusResult(false, e.getMessage()));
         }
     }
@@ -758,7 +758,7 @@ public class HomeController extends HomeControllerBase {
         try {
             annotationHandler().onAtmosphereReady(resource);
         } catch (AnnotationException e) {
-            Utils.log(HomeController.class, e);
+            Utils.err(HomeController.class, e);
         }
     }
 
@@ -773,7 +773,7 @@ public class HomeController extends HomeControllerBase {
         try {
             annotationHandler().onAtmosphereMessage(resource);
         } catch (AnnotationException e) {
-            Utils.log(HomeController.class, e);
+            Utils.err(HomeController.class, e);
         }
     }
 }
