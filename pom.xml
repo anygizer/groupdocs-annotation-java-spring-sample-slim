@@ -28,6 +28,16 @@
         <!-- Logging -->
         <slf4j.version>1.7.5</slf4j.version>
 
+        <!-- Start Aspose -->
+        <aspose.cells.version>8.3.2</aspose.cells.version>
+        <aspose.diagram.version>5.0.0</aspose.diagram.version>
+        <aspose.email.version>4.9.0.0</aspose.email.version>
+        <aspose.imaging.version>2.4.0</aspose.imaging.version>
+        <aspose.pdf.version>9.7.1</aspose.pdf.version>
+        <aspose.slides.version>14.10.0</aspose.slides.version>
+        <aspose.tasks.version>7.4.0</aspose.tasks.version>
+        <aspose.words.version>14.12.0</aspose.words.version>
+        <!-- End Aspose -->
     </properties>
 
     <dependencies>
@@ -68,47 +78,47 @@
         <dependency>
             <groupId>com.aspose</groupId>
             <artifactId>aspose-cells</artifactId>
-            <version>8.3.0</version>
+            <version>${aspose.cells.version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.aspose</groupId>
             <artifactId>aspose-words</artifactId>
-            <version>14.10.0</version>
+            <version>${aspose.words.version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.aspose</groupId>
             <artifactId>aspose-slides</artifactId>
-            <version>14.8.0</version>
+            <version>${aspose.slides.version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.aspose</groupId>
             <artifactId>aspose-pdf</artifactId>
-            <version>9.7.0</version>
+            <version>${aspose.pdf.version}</version>
         </dependency>
         <dependency>
             <groupId>com.aspose</groupId>
             <artifactId>aspose-email</artifactId>
-            <version>4.7.0.0</version>
+            <version>${aspose.email.version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.aspose</groupId>
             <artifactId>aspose-imaging</artifactId>
-            <version>2.1.0.0</version>
+            <version>${aspose.imaging.version}</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>com.aspose</groupId>
             <artifactId>aspose-diagram</artifactId>
-            <version>3.0.0</version>
+            <version>${aspose.diagram.version}</version>
         </dependency>
         <dependency>
             <groupId>com.aspose</groupId>
             <artifactId>aspose-tasks</artifactId>
-            <version>7.3.0</version>
+            <version>${aspose.tasks.version}</version>
         </dependency>
         <!-- End Aspose -->
         <dependency>
