@@ -20,7 +20,9 @@ import com.groupdocs.annotation.handler.AnnotationHandler;
 import com.groupdocs.annotation.handler.IGroupDocsAnnotation;
 import com.groupdocs.spring.slim.config.ApplicationConfig;
 import com.groupdocs.spring.slim.data.connector.CustomDatabaseConnector;
+import com.groupdocs.spring.slim.data.connector.CustomXmlDataConnector;
 import com.groupdocs.spring.slim.data.connector.ICustomConnector;
+import com.groupdocs.spring.slim.handler.CustomInputDataHandler;
 import com.groupdocs.viewer.config.ServiceConfiguration;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -147,7 +149,8 @@ public abstract class HomeControllerBase implements IGroupDocsAnnotation {
                             connector = new PostgresqlDatabaseConnector(dbServer, dbPort, dbName, dbUsername, dbPassword);
                             break;
                         case CUSTOM:
-                            connector = new CustomDatabaseConnector(dbServer, dbPort, dbName, dbUsername, dbPassword);
+//                            connector = new CustomDatabaseConnector(dbServer, dbPort, dbName, dbUsername, dbPassword);
+                            connector = new CustomXmlDataConnector();
                             break;
                     }
                 }

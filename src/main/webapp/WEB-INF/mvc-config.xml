@@ -14,11 +14,23 @@
 
     <!-- Enables the Spring MVC @Controller programming model -->
 
+    <!-- With the Atmosphere enabled -->
+
     <annotation-driven>
         <argument-resolvers>
             <beans:bean class="com.groupdocs.spring.slim.service.AtmosphereResolver" />
         </argument-resolvers>
     </annotation-driven>
+
+    <!-- With the Atmosphere enabled -->
+
+
+    <!-- With the Atmosphere disabled -->
+
+    <!--<annotation-driven />-->
+
+    <!-- With the Atmosphere disabled -->
+
 
     <resources mapping="/document-viewer/assets/**" location="classpath:/assets/" />
     <resources mapping="/assets/**" location="classpath:/assets/" />

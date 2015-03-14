@@ -29,6 +29,8 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
+    <!-- With the Atmosphere enabled -->
+
     <servlet>
         <servlet-name>atmosphereSpringServlet</servlet-name>
         <servlet-class>org.atmosphere.cpr.MeteorServlet</servlet-class>
@@ -82,8 +84,29 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <!-- With the Atmosphere enabled -->
+
     <!--<session-config>-->
     <!--<session-timeout>1440</session-timeout>-->
     <!--</session-config>-->
+
+    <!-- With the Atmosphere disabled -->
+
+    <!--<servlet>-->
+        <!--<servlet-name>dispatcherServlet</servlet-name>-->
+        <!--<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>-->
+        <!--<init-param>-->
+            <!--<param-name>contextConfigLocation</param-name>-->
+            <!--<param-value>/WEB-INF/mvc-config.xml</param-value>-->
+        <!--</init-param>-->
+        <!--<load-on-startup>1</load-on-startup>-->
+    <!--</servlet>-->
+
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>dispatcherServlet</servlet-name>-->
+        <!--<url-pattern>/</url-pattern>-->
+    <!--</servlet-mapping>-->
+
+    <!-- With the Atmosphere disabled -->
 
 </web-app>

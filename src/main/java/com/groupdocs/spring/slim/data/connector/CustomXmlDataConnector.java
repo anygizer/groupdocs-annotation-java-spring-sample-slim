@@ -13,10 +13,15 @@ import com.groupdocs.spring.slim.data.dao.*;
 public class CustomXmlDataConnector extends AbstractDataConnector implements ICustomConnector {
 
     private IEnvironmentCreator environmentCreator;
+    private IAnnotationDao annotationDao = null;
 
     @Override
     public IAnnotationDao getAnnotationDao() throws AnnotationException {
-        return new CustomXmlAnnotationDaoImpl(environmentCreator);
+        if (annotationDao == null) {
+//            annotationDao = new CustomXmlAnnotationDaoImpl(environmentCreator);
+            annotationDao = new CMISAnnotationDao();
+        }
+        return annotationDao;
     }
 
     @Override

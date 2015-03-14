@@ -255,6 +255,13 @@
             <artifactId>atmosphere-runtime</artifactId>
             <version>2.2.3</version>
         </dependency>
+
+        <!-- Apache: openCMIS -->
+        <dependency>
+            <groupId>org.apache.chemistry.opencmis</groupId>
+            <artifactId>chemistry-opencmis-client-impl</artifactId>
+            <version>LATEST</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
