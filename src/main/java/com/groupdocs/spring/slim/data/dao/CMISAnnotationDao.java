@@ -1,20 +1,20 @@
 package com.groupdocs.spring.slim.data.dao;
 
 
-import com.groupdocs.annotation.data.DaoFactory;
 import com.groupdocs.annotation.data.dao.interfaces.IAnnotationDao;
 import com.groupdocs.annotation.data.tables.interfaces.IAnnotation;
 import com.groupdocs.annotation.exception.AnnotationException;
 import com.groupdocs.spring.slim.data.entity.CMISAnnotation;
 import org.apache.chemistry.opencmis.client.api.*;
 import org.apache.chemistry.opencmis.client.runtime.SessionFactoryImpl;
-import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.SessionParameter;
-import org.apache.chemistry.opencmis.commons.data.PropertyData;
 import org.apache.chemistry.opencmis.commons.enums.BindingType;
 
 import java.util.*;
 
+/**
+ * Created by Ihor Mykhalevych on 2015-03-13.
+ */
 public class CMISAnnotationDao implements IAnnotationDao {
     private static final String SERVICE_URL = "http://localhost:8080/alfresco/api/-default-/public/cmis/versions/1.1/atom";
 
@@ -58,12 +58,9 @@ public class CMISAnnotationDao implements IAnnotationDao {
     }
 
     @Override
-    public void createTableIfNotExists() throws AnnotationException {
+    public void createTableIfNotExists() throws AnnotationException {}
 
-    }
-
-    @Override
-    public IAnnotation selectBy(List<String> fieldNames, Object... fieldValues) throws AnnotationException {
+    private ItemIterable<QueryResult> queryBy(List<String> fieldNames, Object... fieldValues) {
         Session session = getSession();
         String whereClause = "";
         List<Object> fValues = Arrays.asList(fieldValues);
@@ -71,34 +68,23 @@ public class CMISAnnotationDao implements IAnnotationDao {
             whereClause += " " + getCMISPropertyName(fieldNames.get(i)) + "='" + fValues.get(i) + "'";
         }
         String queryString = "SELECT * FROM " + CMISAnnotation.OBJECT_TYPE_ID_ANNOTATION + " WHERE" + whereClause;
-        // Obtain first element by the just formed criteria
-        QueryResult qResult = session.query(queryString, false).iterator().next();
-        PropertyData<?> propData = qResult.getPropertyById(PropertyIds.OBJECT_ID);
-        String objectId = (String) propData.getFirstValue();
-        CmisObject obj = session.getObject(session.createObjectId(objectId));
+        return session.query(queryString, false);
+    }
 
-        IAnnotation iAnnotation = new CMISAnnotation(obj.getProperties());
-
+    @Override
+    public IAnnotation selectBy(List<String> fieldNames, Object... fieldValues) throws AnnotationException {
+        QueryResult qResult = queryBy(fieldNames, fieldValues).iterator().next();
+        IAnnotation iAnnotation = new CMISAnnotation(qResult.getProperties());
         return iAnnotation;
     }
 
     @Override
     public List<IAnnotation> selectAllBy(List<String> fieldNames, Object... fieldValues) throws AnnotationException {
-        Session session = getSession();
-        String whereClause = "";
-        List<Object> fValues = Arrays.asList(fieldValues);
-        for (int i = 0; i < fieldNames.size(); i++) {
-            whereClause += " " + getCMISPropertyName(fieldNames.get(i)) + "='" + fValues.get(i) + "'";
-        }
-        String queryString = "SELECT * FROM " + CMISAnnotation.OBJECT_TYPE_ID_ANNOTATION + " WHERE" + whereClause;
         // Obtain first element by the just formed criteria
         List<IAnnotation> iAnnotations = new LinkedList<IAnnotation>();
-        ItemIterable<QueryResult> queryResults = session.query(queryString, false);
+        ItemIterable<QueryResult> queryResults =queryBy(fieldNames, fieldValues);
         for (QueryResult qResult : queryResults) {
-            PropertyData<?> propData = qResult.getPropertyById(PropertyIds.OBJECT_ID);
-            String objectId = (String) propData.getFirstValue();
-            CmisObject obj = session.getObject(session.createObjectId(objectId));
-            IAnnotation iAnnotation = new CMISAnnotation(obj.getProperties());
+            IAnnotation iAnnotation = new CMISAnnotation(qResult.getProperties());
             iAnnotations.add(iAnnotation);
         }
         return iAnnotations;

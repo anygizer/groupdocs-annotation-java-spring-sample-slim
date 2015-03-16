@@ -2,12 +2,10 @@ package com.groupdocs.spring.slim.data.entity;
 
 import com.groupdocs.annotation.data.tables.interfaces.IAnnotation;
 import com.groupdocs.annotation.data.tables.interfaces.IReply;
-import org.apache.chemistry.opencmis.client.api.Property;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
+import org.apache.chemistry.opencmis.commons.data.PropertyData;
 
 import java.math.BigInteger;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -123,10 +121,11 @@ public class CMISAnnotation implements IAnnotation {
         this.replies = iAnnotation.getReplies();
     }
 
-    public  CMISAnnotation(List<Property<?>> cmisObjectProperties) {
+    public  CMISAnnotation(List<PropertyData<?>> cmisObjectProperties) {
         HashMap<String, Object> annotation = new HashMap<String, Object>();
-        for (Property<?> property : cmisObjectProperties) {
-            annotation.put(property.getId(), property.getValue());
+        for (PropertyData<?> property : cmisObjectProperties) {
+            List<?> values = property.getValues();
+            annotation.put(property.getId(), values.size() > 0 ? values.get(0) : null);
         }
         initFromCMISObjectProperties(annotation);
     }
