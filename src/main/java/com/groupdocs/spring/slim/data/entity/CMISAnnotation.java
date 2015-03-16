@@ -60,6 +60,7 @@ public class CMISAnnotation implements IAnnotation {
 
     private void initFromCMISObjectProperties(HashMap<String, Object> annotation) {
         // IAnnotation properties
+        this.setId(Integer.parseInt(annotation.get(getCMISPropertyName(this.ANNOTATION_SESSION_ID)).toString()));
         this.setAnnotationSessionId(((BigInteger)annotation.get(getCMISPropertyName(this.ANNOTATION_SESSION_ID))).intValue());
         this.setGuid(getIfNotNull(annotation.get(getCMISPropertyName(this.GUID))));
         this.setUserId(((BigInteger)annotation.get(getCMISPropertyName(this.USER_ID))).intValue());
@@ -89,6 +90,7 @@ public class CMISAnnotation implements IAnnotation {
     public CMISAnnotation() {}
 
     public CMISAnnotation(IAnnotation iAnnotation) {
+        this.id = iAnnotation.getId();
         this.annotationSessionId = iAnnotation.getAnnotationSessionId();
         this.userId = iAnnotation.getUserId();
         this.guid = iAnnotation.getGuid();
@@ -114,7 +116,6 @@ public class CMISAnnotation implements IAnnotation {
         this.penColor = iAnnotation.getPenColor();
         this.backgroundColor = iAnnotation.getBackgroundColor();
         this.replies = iAnnotation.getReplies();
-        this.id = iAnnotation.getId();
     }
 
     public  CMISAnnotation(List<Property<?>> cmisObjectProperties) {
@@ -135,6 +136,7 @@ public class CMISAnnotation implements IAnnotation {
         annProp.put(PropertyIds.OBJECT_TYPE_ID, "I:" + OBJECT_TYPE_ID_ANNOTATION);
 
         // IAnnotation properties
+        annProp.put(getCMISPropertyName(this.ID), this.getId());
         annProp.put(getCMISPropertyName(this.ANNOTATION_SESSION_ID), this.getAnnotationSessionId());
         annProp.put(getCMISPropertyName(this.GUID), this.getGuid());
         annProp.put(getCMISPropertyName(this.USER_ID), this.getUserId());

@@ -68,7 +68,7 @@ public class CMISAnnotationDao implements IAnnotationDao {
         String whereClause = "";
         List<Object> fValues = Arrays.asList(fieldValues);
         for (int i = 0; i < fieldNames.size(); i++) {
-            whereClause += " " + getCMISPropertyName(fieldNames.get(i)) + "=" + fValues.get(i);
+            whereClause += " " + getCMISPropertyName(fieldNames.get(i)) + "='" + fValues.get(i) + "'";
         }
         String queryString = "SELECT * FROM " + CMISAnnotation.OBJECT_TYPE_ID_ANNOTATION + " WHERE" + whereClause;
         // Obtain first element by the just formed criteria
@@ -88,7 +88,7 @@ public class CMISAnnotationDao implements IAnnotationDao {
         String whereClause = "";
         List<Object> fValues = Arrays.asList(fieldValues);
         for (int i = 0; i < fieldNames.size(); i++) {
-            whereClause += " " + getCMISPropertyName(fieldNames.get(i)) + "=" + fValues.get(i);
+            whereClause += " " + getCMISPropertyName(fieldNames.get(i)) + "='" + fValues.get(i) + "'";
         }
         String queryString = "SELECT * FROM " + CMISAnnotation.OBJECT_TYPE_ID_ANNOTATION + " WHERE" + whereClause;
         // Obtain first element by the just formed criteria
