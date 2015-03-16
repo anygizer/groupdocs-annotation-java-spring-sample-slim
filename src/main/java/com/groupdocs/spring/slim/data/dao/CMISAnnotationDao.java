@@ -118,11 +118,17 @@ public class CMISAnnotationDao implements IAnnotationDao {
 
     @Override
     public int update(IAnnotation iAnnotation) {
+        Session session = getSession();
+        CMISAnnotation cmisAnnotation = (CMISAnnotation) iAnnotation;
+        ObjectId objectId = session.createObjectId(cmisAnnotation.getCmisObjectId());
+        session.getObject(objectId).updateProperties(cmisAnnotation.getCMISObject());
         return 0;
     }
 
     @Override
     public int delete(IAnnotation iAnnotation) {
+        Session session = getSession();
+        session.delete(session.createObjectId(((CMISAnnotation)iAnnotation).getCmisObjectId()));
         return 0;
     }
 }

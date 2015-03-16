@@ -18,7 +18,11 @@ import java.util.List;
  */
 public class CMISAnnotation implements IAnnotation {
     public static final String OBJECT_TYPE_ID_ANNOTATION = "groupdocs:annotation";
+    public static final String CMIS_OBJECT_ID = "cmis:objectId";
 
+    private String cmisObjectId;
+
+    private int id;
     private int annotationSessionId;
     private int userId;
     private String guid;
@@ -44,7 +48,7 @@ public class CMISAnnotation implements IAnnotation {
     private int penColor;
     private Integer backgroundColor;
     private List<IReply> replies;
-    private int id;
+
 
     private String getCMISPropertyName(String propertyName) {
         return "groupdocs:" + propertyName;
@@ -59,6 +63,7 @@ public class CMISAnnotation implements IAnnotation {
     }
 
     private void initFromCMISObjectProperties(HashMap<String, Object> annotation) {
+        this.setCmisObjectId(getIfNotNull(annotation.get(CMIS_OBJECT_ID)));
         // IAnnotation properties
         this.setId(Integer.parseInt(annotation.get(getCMISPropertyName(this.ANNOTATION_SESSION_ID)).toString()));
         this.setAnnotationSessionId(((BigInteger)annotation.get(getCMISPropertyName(this.ANNOTATION_SESSION_ID))).intValue());
@@ -423,5 +428,13 @@ public class CMISAnnotation implements IAnnotation {
     @Override
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCmisObjectId() {
+        return cmisObjectId;
+    }
+
+    public void setCmisObjectId(String cmisObjectId) {
+        this.cmisObjectId = cmisObjectId;
     }
 }
