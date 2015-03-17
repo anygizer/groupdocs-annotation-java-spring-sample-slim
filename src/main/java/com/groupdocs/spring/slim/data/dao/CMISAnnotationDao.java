@@ -1,8 +1,14 @@
 package com.groupdocs.spring.slim.data.dao;
 
 
+import com.groupdocs.annotation.common.Utils;
+import com.groupdocs.annotation.data.DaoFactory;
 import com.groupdocs.annotation.data.dao.interfaces.IAnnotationDao;
+import com.groupdocs.annotation.data.dao.interfaces.IDocumentDao;
+import com.groupdocs.annotation.data.dao.interfaces.ISessionDao;
 import com.groupdocs.annotation.data.tables.interfaces.IAnnotation;
+import com.groupdocs.annotation.data.tables.interfaces.IDocument;
+import com.groupdocs.annotation.data.tables.interfaces.ISession;
 import com.groupdocs.annotation.exception.AnnotationException;
 import com.groupdocs.spring.slim.data.entity.CMISAnnotation;
 import org.apache.chemistry.opencmis.client.api.*;
@@ -65,7 +71,22 @@ public class CMISAnnotationDao implements IAnnotationDao {
         String whereClause = "";
         List<Object> fValues = Arrays.asList(fieldValues);
         for (int i = 0; i < fieldNames.size(); i++) {
-            whereClause += " " + getCMISPropertyName(fieldNames.get(i)) + "='" + fValues.get(i) + "'";
+            String propertyName = fieldNames.get(i);
+            Object propertyValue = fValues.get(i);
+            if(propertyName.equals(IAnnotation.ANNOTATION_SESSION_ID)) {
+                propertyName = CMISAnnotation.ANNOTATION_DOCUMENT_GUID;
+                try (DaoFactory daoFactory = DaoFactory.create()) {
+                    ISessionDao sessionDao = daoFactory.getSessionDao();
+                    IDocumentDao documentDao = daoFactory.getDocumentDao();
+                    ISession iSession = sessionDao.selectBy(Arrays.asList(ISession.ID), propertyValue);
+                    IDocument document = documentDao.selectBy(Arrays.asList(IDocument.ID), iSession.getDocumentId());
+                    // Get document guid
+                    propertyValue = document.getDocumentName();
+                } catch (Exception e) {
+                    Utils.err(this.getClass(), e);
+                }
+            }
+            whereClause += " " + getCMISPropertyName(propertyName) + "='" + propertyValue + "'";
         }
         String queryString = "SELECT * FROM " + CMISAnnotation.OBJECT_TYPE_ID_ANNOTATION + " WHERE" + whereClause;
         return session.query(queryString, false);
@@ -82,7 +103,7 @@ public class CMISAnnotationDao implements IAnnotationDao {
     public List<IAnnotation> selectAllBy(List<String> fieldNames, Object... fieldValues) throws AnnotationException {
         // Obtain first element by the just formed criteria
         List<IAnnotation> iAnnotations = new LinkedList<IAnnotation>();
-        ItemIterable<QueryResult> queryResults =queryBy(fieldNames, fieldValues);
+        ItemIterable<QueryResult> queryResults = queryBy(fieldNames, fieldValues);
         for (QueryResult qResult : queryResults) {
             IAnnotation iAnnotation = new CMISAnnotation(qResult.getProperties());
             iAnnotations.add(iAnnotation);
@@ -94,7 +115,20 @@ public class CMISAnnotationDao implements IAnnotationDao {
     public int insert(IAnnotation iAnnotation) {
         Session session = getSession();
 
-        HashMap<String, Object> annProp = new CMISAnnotation(iAnnotation).getCMISObject();
+        CMISAnnotation cmisAnnotation = new CMISAnnotation(iAnnotation);
+
+        // add document GUID here to be stored in the CMIS repo
+        try (DaoFactory daoFactory = DaoFactory.create()) {
+            ISessionDao sessionDao = daoFactory.getSessionDao();
+            IDocumentDao documentDao = daoFactory.getDocumentDao();
+            ISession iSession = sessionDao.selectBy(Arrays.asList(ISession.ID), iAnnotation.getAnnotationSessionId());
+            IDocument document = documentDao.selectBy(Arrays.asList(IDocument.ID), iSession.getDocumentId());
+            cmisAnnotation.setAnnotationDocumentGuid(document.getDocumentName());
+        } catch (Exception e) {
+            Utils.err(this.getClass(), e);
+        }
+
+        HashMap<String, Object> annProp = cmisAnnotation.getCMISObject();
 
         // Create annotation object
         ObjectId annId = session.createItem(annProp, session.getRootFolder());

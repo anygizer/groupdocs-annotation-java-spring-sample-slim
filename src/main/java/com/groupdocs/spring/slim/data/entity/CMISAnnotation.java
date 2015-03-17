@@ -17,11 +17,13 @@ import java.util.List;
 public class CMISAnnotation implements IAnnotation {
     public static final String OBJECT_TYPE_ID_ANNOTATION = "groupdocs:annotation";
     public static final String CMIS_OBJECT_ID = "cmis:objectId";
+    public static final String ANNOTATION_DOCUMENT_GUID = "annotationDocumentGuid";
 
     private String cmisObjectId;
 
     private int id;
     private int annotationSessionId;
+    private String annotationDocumentGuid;
     private int userId;
     private String guid;
     private int pageNumber;
@@ -65,6 +67,7 @@ public class CMISAnnotation implements IAnnotation {
         // IAnnotation properties
         this.setId(Integer.parseInt(annotation.get(getCMISPropertyName(this.ANNOTATION_SESSION_ID)).toString()));
         this.setAnnotationSessionId(((BigInteger)annotation.get(getCMISPropertyName(this.ANNOTATION_SESSION_ID))).intValue());
+        this.setAnnotationDocumentGuid(getIfNotNull(annotation.get(getCMISPropertyName(this.ANNOTATION_DOCUMENT_GUID))));
         this.setGuid(getIfNotNull(annotation.get(getCMISPropertyName(this.GUID))));
         this.setUserId(((BigInteger)annotation.get(getCMISPropertyName(this.USER_ID))).intValue());
         this.setPageNumber(((BigInteger)annotation.get(getCMISPropertyName(this.PAGE_NUMBER))).intValue());
@@ -142,6 +145,7 @@ public class CMISAnnotation implements IAnnotation {
         // IAnnotation properties
         annProp.put(getCMISPropertyName(this.ID), this.getId());
         annProp.put(getCMISPropertyName(this.ANNOTATION_SESSION_ID), this.getAnnotationSessionId());
+        annProp.put(getCMISPropertyName(this.ANNOTATION_DOCUMENT_GUID), this.getAnnotationDocumentGuid());
         annProp.put(getCMISPropertyName(this.GUID), this.getGuid());
         annProp.put(getCMISPropertyName(this.USER_ID), this.getUserId());
         annProp.put(getCMISPropertyName(this.PAGE_NUMBER), this.getPageNumber());
@@ -435,5 +439,13 @@ public class CMISAnnotation implements IAnnotation {
 
     public void setCmisObjectId(String cmisObjectId) {
         this.cmisObjectId = cmisObjectId;
+    }
+
+    public String getAnnotationDocumentGuid() {
+        return annotationDocumentGuid;
+    }
+
+    public void setAnnotationDocumentGuid(String annotationDocumentGuid) {
+        this.annotationDocumentGuid = annotationDocumentGuid;
     }
 }
