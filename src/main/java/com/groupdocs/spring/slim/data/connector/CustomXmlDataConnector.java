@@ -5,6 +5,7 @@ import com.groupdocs.annotation.data.dao.interfaces.*;
 import com.groupdocs.annotation.data.environment.IEnvironmentCreator;
 import com.groupdocs.annotation.exception.AnnotationException;
 import com.groupdocs.spring.slim.data.dao.*;
+import com.groupdocs.spring.slim.data.entity.CMISAnnotation;
 
 /**
  * The type Custom xml data connector.
@@ -19,7 +20,10 @@ public class CustomXmlDataConnector extends AbstractDataConnector implements ICu
     public IAnnotationDao getAnnotationDao() throws AnnotationException {
         if (annotationDao == null) {
 //            annotationDao = new CustomXmlAnnotationDaoImpl(environmentCreator);
-            annotationDao = new CMISAnnotationDao();
+            annotationDao = new CMISAnnotationDao(environmentCreator);
+        }
+        if(((CMISAnnotationDao)annotationDao).getEnvironmentCreator() == null) {
+            ((CMISAnnotationDao) annotationDao).setEnvironmentCreator(environmentCreator);
         }
         return annotationDao;
     }

@@ -1,14 +1,9 @@
 package com.groupdocs.spring.slim.data.dao;
 
 
-import com.groupdocs.annotation.common.Utils;
-import com.groupdocs.annotation.data.DaoFactory;
 import com.groupdocs.annotation.data.dao.interfaces.IAnnotationDao;
-import com.groupdocs.annotation.data.dao.interfaces.IDocumentDao;
-import com.groupdocs.annotation.data.dao.interfaces.ISessionDao;
+import com.groupdocs.annotation.data.environment.IEnvironmentCreator;
 import com.groupdocs.annotation.data.tables.interfaces.IAnnotation;
-import com.groupdocs.annotation.data.tables.interfaces.IDocument;
-import com.groupdocs.annotation.data.tables.interfaces.ISession;
 import com.groupdocs.annotation.exception.AnnotationException;
 import com.groupdocs.spring.slim.data.entity.CMISAnnotation;
 import org.apache.chemistry.opencmis.client.api.*;
@@ -23,8 +18,13 @@ import java.util.*;
  */
 public class CMISAnnotationDao implements IAnnotationDao {
     private static final String SERVICE_URL = "http://localhost:8080/alfresco/api/-default-/public/cmis/versions/1.1/atom";
+    private IEnvironmentCreator environmentCreator;
 
     private Session session;
+
+    public CMISAnnotationDao(IEnvironmentCreator environmentCreator) {
+        this.environmentCreator = environmentCreator;
+    }
 
     private String getServiceUrl() {
         return SERVICE_URL;
@@ -75,16 +75,8 @@ public class CMISAnnotationDao implements IAnnotationDao {
             Object propertyValue = fValues.get(i);
             if(propertyName.equals(IAnnotation.ANNOTATION_SESSION_ID)) {
                 propertyName = CMISAnnotation.ANNOTATION_DOCUMENT_GUID;
-                try (DaoFactory daoFactory = DaoFactory.create()) {
-                    ISessionDao sessionDao = daoFactory.getSessionDao();
-                    IDocumentDao documentDao = daoFactory.getDocumentDao();
-                    ISession iSession = sessionDao.selectBy(Arrays.asList(ISession.ID), propertyValue);
-                    IDocument document = documentDao.selectBy(Arrays.asList(IDocument.ID), iSession.getDocumentId());
-                    // Get document guid
-                    propertyValue = document.getDocumentName();
-                } catch (Exception e) {
-                    Utils.err(this.getClass(), e);
-                }
+                // Get document guid
+                propertyValue = environmentCreator.createEnvironment().getFileGuid();
             }
             whereClause += " " + getCMISPropertyName(propertyName) + "='" + propertyValue + "'";
         }
@@ -118,15 +110,7 @@ public class CMISAnnotationDao implements IAnnotationDao {
         CMISAnnotation cmisAnnotation = new CMISAnnotation(iAnnotation);
 
         // add document GUID here to be stored in the CMIS repo
-        try (DaoFactory daoFactory = DaoFactory.create()) {
-            ISessionDao sessionDao = daoFactory.getSessionDao();
-            IDocumentDao documentDao = daoFactory.getDocumentDao();
-            ISession iSession = sessionDao.selectBy(Arrays.asList(ISession.ID), iAnnotation.getAnnotationSessionId());
-            IDocument document = documentDao.selectBy(Arrays.asList(IDocument.ID), iSession.getDocumentId());
-            cmisAnnotation.setAnnotationDocumentGuid(document.getDocumentName());
-        } catch (Exception e) {
-            Utils.err(this.getClass(), e);
-        }
+        cmisAnnotation.setAnnotationDocumentGuid(environmentCreator.createEnvironment().getFileGuid());
 
         HashMap<String, Object> annProp = cmisAnnotation.getCMISObject();
 
@@ -150,5 +134,13 @@ public class CMISAnnotationDao implements IAnnotationDao {
         Session session = getSession();
         session.delete(session.createObjectId(((CMISAnnotation)iAnnotation).getCmisObjectId()));
         return 0;
+    }
+
+    public IEnvironmentCreator getEnvironmentCreator() {
+        return environmentCreator;
+    }
+
+    public void setEnvironmentCreator(IEnvironmentCreator environmentCreator) {
+        this.environmentCreator = environmentCreator;
     }
 }
