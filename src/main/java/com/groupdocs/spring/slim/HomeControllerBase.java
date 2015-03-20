@@ -22,6 +22,7 @@ import com.groupdocs.spring.slim.config.ApplicationConfig;
 import com.groupdocs.spring.slim.data.connector.CustomDatabaseConnector;
 import com.groupdocs.spring.slim.data.connector.CustomXmlDataConnector;
 import com.groupdocs.spring.slim.data.connector.ICustomConnector;
+import com.groupdocs.spring.slim.handler.CMISInputDataHandler;
 import com.groupdocs.spring.slim.handler.CustomInputDataHandler;
 import com.groupdocs.viewer.config.ServiceConfiguration;
 import org.apache.commons.io.IOUtils;
@@ -173,7 +174,8 @@ public abstract class HomeControllerBase implements IGroupDocsAnnotation {
                 // It need for date formatting
                 Locale.setDefault(Locale.CANADA);
                 //
-                annotationHandler = new AnnotationHandler(serviceConfiguration, connector);
+                annotationHandler = new AnnotationHandler(serviceConfiguration, connector,
+                        new CMISInputDataHandler(serviceConfiguration));
                 if (connector instanceof ICustomConnector) {
                     ((ICustomConnector) connector).setEnvironmentCreator(annotationHandler);
                 }

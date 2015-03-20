@@ -7,10 +7,6 @@ import com.groupdocs.annotation.handler.AnnotationHandler;
 import com.groupdocs.annotation.localization.ILocalization;
 import com.groupdocs.annotation.localization.LocalizationRU;
 import com.groupdocs.spring.slim.localization.LocalizationGE;
-import com.groupdocs.viewer.config.ServiceConfiguration;
-import com.groupdocs.viewer.domain.path.EncodedPath;
-import com.groupdocs.viewer.domain.path.GroupDocsPath;
-import com.groupdocs.viewer.domain.path.TokenId;
 import org.apache.commons.io.IOUtils;
 import org.atmosphere.cpr.AtmosphereResource;
 import org.springframework.http.HttpStatus;
@@ -39,14 +35,17 @@ public class HomeController extends HomeControllerBase {
      * @param model view model
      * @param request HTTP servlet request
      * @param response http servlet response
-     * @param file file name
-     * @param tokenId file token id
+     * @param file nodeRef of the document
      * @param userName user name
+     * @param userPassword user password
      * @return rendered page
      * @throws Exception
      */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index(Model model, HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "file", required = false) String file, @RequestParam(value = "tokenId", required = false) String tokenId, @RequestParam(value = "userName", required = false) final String userName) throws Exception {
+    @RequestMapping(value = {"/", VIEW}, method = RequestMethod.GET)
+    public String index(Model model, HttpServletRequest request, HttpServletResponse response,
+                        @RequestParam(value = "file", required = false) String file,
+                        @RequestParam(value = "userName", required = false) final String userName,
+                        @RequestParam(value = "userPassword", required = false) String userPassword) throws Exception {
         // Configure localization
         ILocalization localization = null;
         if ("RU".equalsIgnoreCase(applicationConfig.getLocalization())) {
@@ -57,28 +56,15 @@ public class HomeController extends HomeControllerBase {
         // Setting header in jsp page
         model.addAttribute("groupdocsHeader", annotationHandler().getHeader(applicationConfig.getApplicationPath(), request));
 
-        // Initialization of Viewer with document from this path
-        GroupDocsPath path = null;
-        if (file != null && !file.isEmpty()) {
-            ServiceConfiguration configuration = annotationHandler().getConfiguration();
-            if (configuration != null) {
-                path = new EncodedPath(file, configuration);
-            }
-        } else if (tokenId != null && !tokenId.isEmpty()) {
-            TokenId tki = new TokenId(tokenId, applicationConfig.getEncryptionKey());
-            if (!tki.isExpired()) {
-                path = tki;
-            }
-        } else {
-            ServiceConfiguration configuration = annotationHandler().getConfiguration();
-            path = new EncodedPath(applicationConfig.getDefaultFileName(), configuration);
-        }
-        final String initialPath = (path == null) ? "" : path.getPath();
+        // Initialization of Viewer with document with this nodeRef encoded
+        final String initialPath = EncodeUtils.encodeBase64String(file);
         final String userGuid = annotationHandler().getUserGuid(userName);
 //        try {
 //            updateUserAvatar(userGuid, "E:\\\\Images\\\\Avatar.jpeg");
 //        } catch (Exception e) {}
         model.addAttribute("groupdocsScripts", annotationHandler().getAnnotationScript(initialPath, userName, userGuid, localization));
+        request.getSession().setAttribute("cmisUserName", userName);
+        request.getSession().setAttribute("cmisUserPassword", userPassword);
         return "index";
     }
 
